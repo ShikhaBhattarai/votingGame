@@ -1,8 +1,12 @@
-var chatApp = angular.module('voting-game', []);
+// ng-voting-game.js
+// for The Voting Game
 
-chatApp.controller('ChatController', function($scope, $http) {
+var gameApp = angular.module('voting-game', []);
 
-    var connection = new WebSocket('ws://localhost:8080/voting-game/chat');
+gameApp.controller('GameController', function($scope, $http) {
+
+    //var connection = new WebSocket('ws://52.89.91.232:8080/the-voting-game/');
+    var connection = new WebSocket('ws://localhost:8080/the-voting-game/game');
 
     // When the connection is open, send some data to the server 
     connection.onopen = function() {
@@ -18,24 +22,24 @@ chatApp.controller('ChatController', function($scope, $http) {
     connection.onmessage = function(e) {
         displayData(e.data);
         data = e.data.split("|");
-        if ($scope.otherUser != data[0] && $scope.username != data[0]) {
+        if ($scope.otherPlayer != data[0] && $scope.u_name != data[0]) {
             showNotification(data[0])
         }
     };
 
-    $scope.getUsers = function() {
-        $http.get("/voting-game/users?action=findall")
+    $scope.getPlayers = function() {
+        $http.get("/the-voting-game/players?action=findall")
             .then(function(resp) {
-                $scope.users = resp.data;
-                if (typeof $scope.otherUser == 'undefined') {
-                    $scope.selectUser($scope.lastchattedwith, $scope.users);
+                $scope.players = resp.data;
+                if (typeof $scope.otherPlayer == 'undefined') {
+                    $scope.selectPlayer($scope.players);
                 }
             });
-        setTimeout($scope.getUsers, 2000);
+        setTimeout($scope.getPlayers, 2000);
     }
 
-    $scope.populateUnreadList = function() {
-        $http.get("/voting-game/users?action=getunread&user="+ $scope.username)
+    /*$scope.populateUnreadList = function() {
+        $http.get("/the-voting-game/users?action=getunread&user="+ $scope.u_name)
             .then(function(resp) {
                 $scope.myUnreadUserList = resp.data;
             });
@@ -45,7 +49,7 @@ chatApp.controller('ChatController', function($scope, $http) {
     $scope.checkUnreadList = function(user, myUnreadUserList) {
         for(u in myUnreadUserList){
             if($scope.otherUser == user && user == myUnreadUserList[u]){
-                $scope.clearUnread($scope.username, myUnreadUserList[u]);
+                $scope.clearUnread($scope.u_name, myUnreadUserList[u]);
             } else if(user==myUnreadUserList[u]){
                 return true;
             }
@@ -54,29 +58,28 @@ chatApp.controller('ChatController', function($scope, $http) {
     }
 
     $scope.clearUnread = function(user, hasunreadfrom) {
-        $http.get("/voting-game/users?action=clearunread&user="+user+"&hasunreadfrom="+hasunreadfrom)
+        $http.get("/the-voting-game/users?action=clearunread&user="+user+"&hasunreadfrom="+hasunreadfrom)
             .then(function(resp) {
             });
-    }
+    }*/
 
-    $scope.getCurrentUser = function() {
-        $http.get("/voting-game/users?action=getcurrent")
+    $scope.getCurrentPlayer = function() {
+        $http.get("/the-voting-game/players?action=currentplayer")
             .then(function(resp) {
                 var data = resp.data;
-                $scope.username = data.username;
-                $scope.firstname = data.firstname;
-                $scope.lastname = data.lastname;
-                $scope.lastchattedwith = data.lastchattedwith;
-                $scope.lastlogoff = data.lastlogoff;
-                $scope.registerToSocket(data.username);
-                $scope.getUsers();
-                $scope.populateUnreadList();
+                $scope.e_mail = data.e_mail;
+                $scope.f_name = data.f_name;
+                $scope.l_name = data.l_name;
+                $scope.u_name = data.u_name;
+                $scope.games_won = data.games_won;
+                $scope.getPlayers();
+                //$scope.populateUnreadList();
             });
 
     }
 
-    function getMessages(user1, user2) {
-        $http.post("/voting-game/messages", {}, {
+    /*function getMessages(user1, user2) {
+        $http.post("/the-voting-game/messages", {}, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
@@ -112,44 +115,45 @@ chatApp.controller('ChatController', function($scope, $http) {
         var second=jsonObject.time.second;
         d = new Date(year,month,day,hour,minute,second);
         return d;
-    }
+    }*/
 
-    $scope.selectUser = function(selectedUsername, users) {
-        if (connection && selectedUsername != $scope.username && selectedUsername != null) {
+    $scope.selectPlayer = function(selectedPlayername, players) {
+        if (connection && selectedPlayername != $scope.u_name && selectedPlayername != null) {
             var chatBox = document.getElementById('chat-box-1');
-            for (var u in users) {
-                if (users[u].username == selectedUsername) {
-                    $scope.otherUser = users[u].username;
-                    $scope.otherUserF = users[u].firstname;
-                    $scope.otherUserL = users[u].lastname;
+            for (var p in players) {
+                if (players[p].u_name == selectedPlayername) {
+                    $scope.otherPlayE = players[p].e_mail;
+                    $scope.otherPlayerF = players[p].f_name;
+                    $scope.otherPlayerL = players[p].l_name;
+                    $scope.otherPlayerU = players[p].u_name;
                 }
             }
-            $scope.clearUnread($scope.username, selectedUsername);
-            chatBox.innerHTML = "";
-            getMessages($scope.username, selectedUsername);
+            //$scope.clearUnread($scope.u_name, selectedU_name);
+            //chatBox.innerHTML = "";
+            //getMessages($scope.u_name, selectedU_name);
         }
     }
 
-    $scope.registerToSocket = function(username) {
-        sendMessage("register=" + username);
+    $scope.registerToSocket = function(u_name) {
+        sendMessage("register=" + u_name);
     }
 
-    $scope.chat = function() {
+    /*$scope.chat = function() {
         var text = $scope.toSend;
-        var from = $scope.username;
+        var from = $scope.u_name;
         var to = $scope.otherUser;
         if (text != null) {
             sendMessage(from + "|" + to + "|" + text);
             document.getElementById("chatInput").value = "";
         }
-    }
+    }*/
 
     function displayData(data) {
         var chat = data;
         var data = data.split("|");
         var chatBox = document.getElementById('chat-box-1');
         if (data[1] != null && data[2] != null) {
-            if ($scope.otherUser == data[0] || $scope.username == data[0]) {
+            if ($scope.otherPlayerU == data[0] || $scope.u_name == data[0]) {
                 chatBox.innerHTML = chatBox.innerHTML + "<br/>" + data[0] + ": " + data[2];
             }
         } else {
@@ -180,17 +184,17 @@ chatApp.controller('ChatController', function($scope, $http) {
             }, 5); // wait 5 milisecond for the connection...
     }
 
-    function showNotification(username) {
+    function showNotification(u_name) {
         if (Notification.permission !== "granted") {
             Notification.requestPermission();
         } else {
             var notification = new Notification('New Message ', {
                 icon: 'http://www.clipartbest.com/cliparts/dT7/eGE/dT7eGEonc.png',
-                body: "Hey there! " + username + " has sent you a message!",
+                body: "Hey there! " + u_name + " wants to play The Voting Game!",
             });
 
             notification.onclick = function() {
-                $scope.selectUser(username, $scope.users);
+                $scope.selectPlayer(u_name, $scope.players);
                 window.focus();
             };
         }
@@ -198,23 +202,23 @@ chatApp.controller('ChatController', function($scope, $http) {
 
 });
 
-chatApp.controller('LoginController', function($scope, $http) {
+gameApp.controller('LoginController', function($scope, $http) {
 
     $scope.login = function() {
-        $http.post("/voting-game/register", {}, {
+        $http.post("/the-voting-game/authenticate", {}, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             params: {
                 "action": "login",
-                "username": $scope.username
+                "u_name": $scope.u_name
             }
         })
             .then(function(resp) {
                 var json = resp.data;
                 console.log(json.result)
                 if (json.result == "loginSuccess") {
-                    window.location = "/voting-game/index.html";
+                    window.location = "/the-voting-game/game.html";
                 } else {
                     $scope.showReg = true;
                 }
@@ -222,27 +226,30 @@ chatApp.controller('LoginController', function($scope, $http) {
     }
 
     $scope.register = function() {
-        $http.post("/voting-game/register", {}, {
+        $http.post("/the-voting-game/authenticate", {}, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             params: {
                 "action": "register",
-                "username": $scope.username,
-                "firstname": $scope.firstname,
-                "lastname": $scope.lastname
+                "e_mail": $scope.e_mail,
+                "f_name": $scope.f_name,
+                "l_name": $scope.l_name,
+                "u_name": $scope.u_name,
             }
         })
             .then(function(resp) {
                 var json = resp.data;
                 if (json.result == "registerSuccess") {
-                    window.location = "/voting-game/index.html";
+                    window.location = "/the-voting-game/game.html";
                 } else if (json.result == "alreadyRegistered") {
-                    window.location = "/voting-game/index.html";
+                    window.location = "/the-voting-game/game.html";
                 }
             });
     }
 
-});/**
+});
+
+/**
  * Created by shikhabhattarai on 11/2/15.
  */
