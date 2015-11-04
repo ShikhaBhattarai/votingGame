@@ -200,6 +200,27 @@ gameApp.controller('GameController', function($scope, $http) {
         }
     }
 
+    $scope.create = function() {
+            $http.post("/the-voting-game/create", {}, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                params: {
+                    "action": "create",
+                    "u_name": $scope.u_name
+                }
+            })
+                .then(function(resp) {
+                    var json = resp.data;
+                    console.log(json.result)
+                    if (json.result == "create") {
+                        window.location = "/the-voting-game/home.html";
+                    } else {
+                        $scope.showStart = true;
+                    }
+                });
+        }
+
 });
 
 gameApp.controller('LoginController', function($scope, $http) {
@@ -218,7 +239,7 @@ gameApp.controller('LoginController', function($scope, $http) {
                 var json = resp.data;
                 console.log(json.result)
                 if (json.result == "loginSuccess") {
-                    window.location = "/the-voting-game/game.html";
+                    window.location = "/the-voting-game/home.html";
                 } else {
                     $scope.showReg = true;
                 }
@@ -241,9 +262,9 @@ gameApp.controller('LoginController', function($scope, $http) {
             .then(function(resp) {
                 var json = resp.data;
                 if (json.result == "registerSuccess") {
-                    window.location = "/the-voting-game/game.html";
+                    window.location = "/the-voting-game/home.html";
                 } else if (json.result == "alreadyRegistered") {
-                    window.location = "/the-voting-game/game.html";
+                    window.location = "/the-voting-game/home.html";
                 }
             });
     }
