@@ -38,30 +38,17 @@ gameApp.controller('GameController', function($scope, $http) {
         setTimeout($scope.getPlayers, 2000);
     }
 
-    /*$scope.populateUnreadList = function() {
-        $http.get("/the-voting-game/users?action=getunread&user="+ $scope.u_name)
-            .then(function(resp) {
-                $scope.myUnreadUserList = resp.data;
-            });
-        setTimeout($scope.populateUnreadList, 500);
-    }
-
-    $scope.checkUnreadList = function(user, myUnreadUserList) {
-        for(u in myUnreadUserList){
-            if($scope.otherUser == user && user == myUnreadUserList[u]){
-                $scope.clearUnread($scope.u_name, myUnreadUserList[u]);
-            } else if(user==myUnreadUserList[u]){
-                return true;
-            }
+    $scope.getLeaders = function() {
+            $http.get("/the-voting-game/players?action=getLeaders")
+                .then(function(resp) {
+                    $scope.leaders = resp.data;
+                    window.location = "/the-voting-game/leaderboard.html";
+                    /*if (typeof $scope.otherPlayer == 'undefined') {
+                        $scope.selectPlayer($scope.players);
+                    }*/
+                });
+            setTimeout($scope.getLeaders, 2000);
         }
-        return false;
-    }
-
-    $scope.clearUnread = function(user, hasunreadfrom) {
-        $http.get("/the-voting-game/users?action=clearunread&user="+user+"&hasunreadfrom="+hasunreadfrom)
-            .then(function(resp) {
-            });
-    }*/
 
     $scope.getCurrentPlayer = function() {
         $http.get("/the-voting-game/players?action=currentplayer")
@@ -71,51 +58,11 @@ gameApp.controller('GameController', function($scope, $http) {
                 $scope.f_name = data.f_name;
                 $scope.l_name = data.l_name;
                 $scope.u_name = data.u_name;
-                $scope.games_won = data.games_won;
+                $scope.g_won = data.g_won;
                 $scope.getPlayers();
                 //$scope.populateUnreadList();
             });
-
     }
-
-    /*function getMessages(user1, user2) {
-        $http.post("/the-voting-game/messages", {}, {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            params: {
-                "user1": user1,
-                "user2": user2
-            }
-        })
-            .then(function(resp) {
-                var messages = resp.data;
-                for (var m in messages) {
-                    var data = messages[m].sender + "|" + messages[m].recipient + "|" + messages[m].messagetext;
-                    if(m != 0){
-                        var datetime =parseDate(messages[m].datetime)
-                        var prevDatetime =parseDate(messages[m-1].datetime)
-                        var diff = Math.abs(datetime - prevDatetime);
-                        if(diff > (60*1000*15)){
-                            var dateString= datetime.getMonth() + "/" + datetime.getDate() + "/" + datetime.getFullYear() + " " + ((datetime.getHours() + 11) % 12 + 1) + ":" + ((datetime.getMinutes()<10?'0':'') + datetime.getMinutes());
-                            displayData("-------------"+dateString+"-------------");
-                        }
-                    }
-                    displayData(data);
-                }
-            });
-    }
-
-    function parseDate(jsonObject){
-        var year=jsonObject.date.year;
-        var month=jsonObject.date.month;
-        var day=jsonObject.date.day;
-        var hour=jsonObject.time.hour;
-        var minute=jsonObject.time.minute;
-        var second=jsonObject.time.second;
-        d = new Date(year,month,day,hour,minute,second);
-        return d;
-    }*/
 
     $scope.selectPlayer = function(selectedPlayername, players) {
         if (connection && selectedPlayername != $scope.u_name && selectedPlayername != null) {
@@ -137,16 +84,6 @@ gameApp.controller('GameController', function($scope, $http) {
     $scope.registerToSocket = function(u_name) {
         sendMessage("register=" + u_name);
     }
-
-    /*$scope.chat = function() {
-        var text = $scope.toSend;
-        var from = $scope.u_name;
-        var to = $scope.otherUser;
-        if (text != null) {
-            sendMessage(from + "|" + to + "|" + text);
-            document.getElementById("chatInput").value = "";
-        }
-    }*/
 
     function displayData(data) {
         var chat = data;
@@ -211,15 +148,89 @@ gameApp.controller('GameController', function($scope, $http) {
                 }
             })
                 .then(function(resp) {
-                    var json = resp.data;
-                    console.log(json.result)
-                    if (json.result == "create") {
-                        window.location = "/the-voting-game/home.html";
-                    } else {
-                        $scope.showStart = true;
-                    }
+                    //var json = resp.data;
+                    //console.log(json.result)
+                    //if (json.result == "create") {
+                        window.location = "/the-voting-game/invite.html";
+                    //} else {
+                    //    $scope.showStart = true;
+                    //}
                 });
         }
+
+         /*$scope.populateUnreadList = function() {
+                $http.get("/the-voting-game/users?action=getunread&user="+ $scope.u_name)
+                    .then(function(resp) {
+                        $scope.myUnreadUserList = resp.data;
+                    });
+                setTimeout($scope.populateUnreadList, 500);
+            }
+
+            $scope.checkUnreadList = function(user, myUnreadUserList) {
+                for(u in myUnreadUserList){
+                    if($scope.otherUser == user && user == myUnreadUserList[u]){
+                        $scope.clearUnread($scope.u_name, myUnreadUserList[u]);
+                    } else if(user==myUnreadUserList[u]){
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            $scope.clearUnread = function(user, hasunreadfrom) {
+                $http.get("/the-voting-game/users?action=clearunread&user="+user+"&hasunreadfrom="+hasunreadfrom)
+                    .then(function(resp) {
+                    });
+            }
+
+            function getMessages(user1, user2) {
+                    $http.post("/the-voting-game/messages", {}, {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        params: {
+                            "user1": user1,
+                            "user2": user2
+                        }
+                    })
+                        .then(function(resp) {
+                            var messages = resp.data;
+                            for (var m in messages) {
+                                var data = messages[m].sender + "|" + messages[m].recipient + "|" + messages[m].messagetext;
+                                if(m != 0){
+                                    var datetime =parseDate(messages[m].datetime)
+                                    var prevDatetime =parseDate(messages[m-1].datetime)
+                                    var diff = Math.abs(datetime - prevDatetime);
+                                    if(diff > (60*1000*15)){
+                                        var dateString= datetime.getMonth() + "/" + datetime.getDate() + "/" + datetime.getFullYear() + " " + ((datetime.getHours() + 11) % 12 + 1) + ":" + ((datetime.getMinutes()<10?'0':'') + datetime.getMinutes());
+                                        displayData("-------------"+dateString+"-------------");
+                                    }
+                                }
+                                displayData(data);
+                            }
+                        });
+                }
+
+                function parseDate(jsonObject){
+                    var year=jsonObject.date.year;
+                    var month=jsonObject.date.month;
+                    var day=jsonObject.date.day;
+                    var hour=jsonObject.time.hour;
+                    var minute=jsonObject.time.minute;
+                    var second=jsonObject.time.second;
+                    d = new Date(year,month,day,hour,minute,second);
+                    return d;
+                }
+
+                $scope.chat = function() {
+                        var text = $scope.toSend;
+                        var from = $scope.u_name;
+                        var to = $scope.otherUser;
+                        if (text != null) {
+                            sendMessage(from + "|" + to + "|" + text);
+                            document.getElementById("chatInput").value = "";
+                        }
+                    }*/
 
 });
 

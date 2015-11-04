@@ -16,6 +16,7 @@ public class PlayerRepository {
 	private static final String INSERT_SQL = "INSERT INTO players (e_mail, f_name, l_name, u_name) VALUES (?, ?, ?, ? )";
 	private static final String SELECT_ALL_SQL = "SELECT * FROM players;";
 	private static final String SELECT_PLAYER_SQL = "SELECT * FROM players WHERE u_name = ";
+	private static final String LEADER_SQL = "SELECT f_name, l_name, g_won FROM players ORDER BY g_won DESC;";
 	//private static final String UPDATE_USER_LASTCHATTIME_SQL = "UPDATE users SET lastchattime= ? WHERE username = ?";
 	//private static final String UPDATE_USER_LASTCHATWITH_SQL = "UPDATE users SET lastchatwith= ? WHERE username = ?";
 	//private static final String UPDATE_USER_ISONLINE_SQL = "UPDATE users SET isonline= ? WHERE username = ?";
@@ -54,6 +55,36 @@ public class PlayerRepository {
 		return p;
 	}
 
+	public List<Player> findAll() {
+		try (Statement statement = connection.createStatement()) {
+			ResultSet resultSet = statement.executeQuery(SELECT_ALL_SQL);
+			List<Player> players = new ArrayList<>();
+			while (resultSet.next()) {
+				Player p = new Player(resultSet.getString("e_mail"), resultSet.getString("f_name"), resultSet.getString("l_name"), resultSet.getString("u_name"));
+				players.add(p);
+			}
+			return players;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return Collections.emptyList();
+	}
+
+	public List<Player> leaderList() {
+		try (Statement statement = connection.createStatement()) {
+			ResultSet resultSet = statement.executeQuery(LEADER_SQL);
+			List<Player> leaders = new ArrayList<Player>();
+			while (resultSet.next()) {
+				Player l = new Player(resultSet.getString("f_name"), resultSet.getString("l_name"), resultSet.getInt("g_won"));
+				leaders.add(l);
+			}
+			return leaders;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return Collections.emptyList();
+	}
+
 	/*
 	public void updateUserOnlineStatus(String username, boolean isonline) {
 		try (PreparedStatement statement = connection.prepareStatement(UPDATE_USER_ISONLINE_SQL)) {
@@ -85,19 +116,4 @@ public class PlayerRepository {
 			e.printStackTrace();
 		}
 	}*/
-
-	public List<Player> findAll() {
-		try (Statement statement = connection.createStatement()) {
-			ResultSet resultSet = statement.executeQuery(SELECT_ALL_SQL);
-			List<Player> players = new ArrayList<>();
-			while (resultSet.next()) {
-				Player p = new Player(resultSet.getString("e_mail"), resultSet.getString("f_name"), resultSet.getString("l_name"), resultSet.getString("u_name"));
-				players.add(p);
-			}
-			return players;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return Collections.emptyList();
-	}
 }

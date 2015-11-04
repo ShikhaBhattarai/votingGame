@@ -54,6 +54,15 @@ public class PlayerServlet extends HttpServlet {
 			Player p = prepo.findPlayer(u_name);
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			String json = gson.toJson(p);
+
+			resp.setContentType("application/json");
+			resp.getWriter().write(json);
+			resp.flushBuffer();
+		} else if (action.equals("getLeaders")) {
+			List<Player> leaders = prepo.leaderList();
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			String json = gson.toJson(leaders);
+
 			resp.setContentType("application/json");
 			resp.getWriter().write(json);
 			resp.flushBuffer();

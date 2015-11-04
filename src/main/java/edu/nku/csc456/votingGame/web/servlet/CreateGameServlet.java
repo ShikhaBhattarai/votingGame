@@ -1,4 +1,4 @@
-// AuthenticateServlet.java
+// CreateGameServlet.java
 // for The Voting Game
 
 package edu.nku.csc456.votingGame.web.servlet;
@@ -15,8 +15,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/authenticate"})
-public class AuthenticateServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/create"})
+public class CreateGameServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,9 +29,9 @@ public class AuthenticateServlet extends HttpServlet {
 		PlayerRepository prepo = (PlayerRepository) getServletContext().getAttribute(MysqlContextListener.PLAYER_REPOSITORY_KEY);
 		String action = req.getParameter("action");
 
-		// called by ng-voting-game register() function
-		if(action.equals("register")){
-			String e_mail = req.getParameter("e_mail");
+		// called by ng-voting-game create() function
+		if (action.equals("create")) {
+			/*String e_mail = req.getParameter("e_mail");
 			String f_name = req.getParameter("f_name");
 			String l_name = req.getParameter("l_name");
 			String u_name= req.getParameter("u_name").toLowerCase();
@@ -63,7 +63,7 @@ public class AuthenticateServlet extends HttpServlet {
 
 			} else {
 				// do not register existing user, auto login
-				ImmutableMap<String,String> responseMap = ImmutableMap.<String, String>builder()
+				/*ImmutableMap<String,String> responseMap = ImmutableMap.<String, String>builder()
 						.put("result", "alreadyRegistered")
 						.build();
 				Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -80,7 +80,7 @@ public class AuthenticateServlet extends HttpServlet {
 				session.setAttribute("u_name", u_name);
 			}
 		// called by ng-voting-game login() function
-		} else if (action.equals("login")) {
+		*/} /*else if (action.equals("login")) {
 			String u_name = req.getParameter("u_name").toLowerCase();
 			// calls PlayerRepository findPlayer method
 			Player p = prepo.findPlayer(u_name);
@@ -117,5 +117,5 @@ public class AuthenticateServlet extends HttpServlet {
 				session.setAttribute("g_won", p.getG_won());
 			}
 		}
-	}
+	*/}
 }

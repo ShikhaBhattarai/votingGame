@@ -2,6 +2,8 @@
 // for The Voting Game
 
 package edu.nku.csc456.votingGame.web.model;
+
+import java.lang.*;
 import java.time.*;
 
 public class Player {
@@ -9,7 +11,7 @@ public class Player {
     String f_name;
     String l_name;
     String u_name;
-    Integer games_won;
+    Integer g_won;
     //String lastchatwith;
     //LocalDateTime  lastchattime;
     //boolean online;
@@ -19,22 +21,28 @@ public class Player {
         this.f_name = "";
         this.l_name = "";
         this.u_name = "";
+        this.g_won = 0;
     }
 
-    public Player(String e_mail, String f_name, String l_name, String u_name) {
+    public Player(String f_name,String l_name, Integer g_won) {
+        this.f_name = f_name;
+        this.l_name = l_name;
+        this.g_won = g_won;
+    }
+
+    public Player(String e_mail, String f_name,String l_name, String u_name) {
         this.e_mail = e_mail;
         this.f_name = f_name;
         this.l_name = l_name;
         this.u_name = u_name;
-        this.games_won = games_won;
     }
 
-    public Player(String e_mail, String f_name,String l_name, String u_name, Integer games_won) {
+    public Player(String e_mail, String f_name,String l_name, String u_name, Integer g_won) {
         this.e_mail = e_mail;
         this.f_name = f_name;
         this.l_name = l_name;
         this.u_name = u_name;
-        this.games_won = games_won;
+        this.g_won = g_won;
     }
 
     public String getE_mail() {
@@ -53,8 +61,8 @@ public class Player {
         return u_name;
     }
 
-    public Integer getGames_won() {
-        return games_won;
+    public Integer getG_won() {
+        return g_won;
     }
 
     /*public boolean isOnline() {
@@ -85,8 +93,8 @@ public class Player {
         this.u_name = u_name;
     }
 
-    public void setGames_won(Integer games_won) {
-        this.games_won = games_won;
+    public void setG_won(Integer g_won) {
+        this.g_won = g_won;
     }
 
     /*public void setOnline(boolean online) {
