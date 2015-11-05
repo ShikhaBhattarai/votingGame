@@ -39,16 +39,20 @@ gameApp.controller('GameController', function($scope, $http) {
     }
 
     $scope.getLeaders = function() {
-            $http.get("/the-voting-game/players?action=getLeaders")
+            $http.get("/the-voting-game/players?action=getleaders")
                 .then(function(resp) {
+                    //window.location = "/the-voting-game/leaderboard.html";
                     $scope.leaders = resp.data;
-                    window.location = "/the-voting-game/leaderboard.html";
                     /*if (typeof $scope.otherPlayer == 'undefined') {
                         $scope.selectPlayer($scope.players);
                     }*/
                 });
             setTimeout($scope.getLeaders, 2000);
         }
+
+    $scope.bulkUpload = function() {
+                window.location = "/the-voting-game/upload.html";
+    }
 
     $scope.getCurrentPlayer = function() {
         $http.get("/the-voting-game/players?action=currentplayer")

@@ -58,7 +58,9 @@ public class PlayerServlet extends HttpServlet {
 			resp.setContentType("application/json");
 			resp.getWriter().write(json);
 			resp.flushBuffer();
-		} else if (action.equals("getLeaders")) {
+		// call by ng-voting-game getLeaders() function
+		} else if (action.equals("getleaders")) {
+			// calls PlayerRepository getLeaders method
 			List<Player> leaders = prepo.leaderList();
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			String json = gson.toJson(leaders);

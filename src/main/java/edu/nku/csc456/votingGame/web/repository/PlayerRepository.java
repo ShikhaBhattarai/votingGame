@@ -73,7 +73,7 @@ public class PlayerRepository {
 	public List<Player> leaderList() {
 		try (Statement statement = connection.createStatement()) {
 			ResultSet resultSet = statement.executeQuery(LEADER_SQL);
-			List<Player> leaders = new ArrayList<Player>();
+			List<Player> leaders = new ArrayList<>();
 			while (resultSet.next()) {
 				Player l = new Player(resultSet.getString("f_name"), resultSet.getString("l_name"), resultSet.getInt("g_won"));
 				leaders.add(l);
