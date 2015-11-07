@@ -72,17 +72,16 @@
 		</header>
 		<main class="mdl-layout__content">
 			<div class="mdl-layout__tab-panel is-active" id="overview">
-<<<<<<< HEAD
 
 				<!-- Overview Section -->
 				<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
 					<header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white">
 						<img src="the_voting_game-5.jpg" alt="logo" height="380" width="250">
-=======
-				<section class="section--center mdl-grid mdl-grid--cell--4-col-desktop mdl-shadow--2dp">
+
+				<!--<section class="section--center mdl-grid mdl-grid--cell--4-col-desktop mdl-shadow--2dp">
 					<header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--3-col-tablet mdl-cell--4-col-phone mdl-color--grey-100 mdl-color-text--white">
-						<img src="the_voting_game-5.jpg" alt="logo" height="360" width="220">
->>>>>>> origin/master
+						<img src="the_voting_game-5.jpg" alt="logo" height="360" width="220"> -->
+
 					</header>
 					<div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
 						<div class="mdl-card__supporting-text">
@@ -97,6 +96,44 @@
 						</div>
 					</div>
 				</section>
+
+				<div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
+					<div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
+						<div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
+							<h2 class="mdl-card__title-text">Leaderboard</h2>
+						</div>
+						<!-- <div class="mdl-layout__supporting-text mdl-color-text--grey-600">
+                            <span class="mdl-layout-title">Players</span>
+                            <div ng-show="players.length == 0" style="padding:20px">
+                                There are no players <i class="material-icons">mood_bad</i>
+                            </div>
+                            <div ng-show="players.length > 0">
+                                <div ng-repeat="player in players" style="padding:20px">
+                                    <button ng-class="{'mdl-button mdl-js-button mdl-color-text--white':player.online == true,'mdl-button mdl-js-button mdl-color-text--grey': player.online == false}"
+                                            ng-click="selectPlayer(player.u_name, players);" ng-hide="player.u_name == u_name"/>
+                                    {{player.u_name}}
+                                    </button>
+                                    <span class="mdl-badge mdl-badge--overlap" data-badge="" ng-show="checkUnreadList(player.u_name, myUnreadUserList);"></span>
+                                </div>
+                            </div>
+                        </div> -->
+
+						<div class="mdl-layout__supporting-text mdl-color-text--grey-600">
+							<span class="mdl-layout-title">Leaderboard</span>
+							<div ng-show="leaders.length == 0" style="padding:20px">
+								There are no leaders <i class="material-icons">mood_bad</i>
+							</div>
+							<div ng-show="leaders.length > 0">
+								<div ng-repeat="leader in leaders" style="padding:20px">
+									<button ng-class="mdl-button mdl-js-button mdl-color-text--white"/>
+									{{leader.f_name}}
+									</button>
+									<span class="mdl-badge mdl-badge--overlap" data-badge="" ng-show="checkUnreadList(leader.u_name, myUnreadUserList);"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
 				<!-- Player Options Section -->
 				<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
@@ -154,46 +191,7 @@
 				</section>
 			</div>
 
-			<div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
-				<div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
-					<div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
-						<h2 class="mdl-card__title-text">Leaderboard</h2>
-					</div>
-					<!-- <div class="mdl-layout__supporting-text mdl-color-text--grey-600">
-						<span class="mdl-layout-title">Players</span>
-						<div ng-show="players.length == 0" style="padding:20px">
-							There are no players <i class="material-icons">mood_bad</i>
-						</div>
-						<div ng-show="players.length > 0">
-							<div ng-repeat="player in players" style="padding:20px">
-								<button ng-class="{'mdl-button mdl-js-button mdl-color-text--white':player.online == true,'mdl-button mdl-js-button mdl-color-text--grey': player.online == false}"
-										ng-click="selectPlayer(player.u_name, players);" ng-hide="player.u_name == u_name"/>
-								{{player.u_name}}
-								</button>
-								<span class="mdl-badge mdl-badge--overlap" data-badge="" ng-show="checkUnreadList(player.u_name, myUnreadUserList);"></span>
-							</div>
-						</div>
-					</div> -->
 
-					<div class="mdl-layout__supporting-text mdl-color-text--grey-600">
-						<span class="mdl-layout-title">Leaderboard</span>
-						<div ng-show="leaders.length == 0" style="padding:20px">
-							There are no leaders <i class="material-icons">mood_bad</i>
-						</div>
-						<div ng-show="leaders.length > 0">
-							<div ng-repeat="leader in leaders" style="padding:20px">
-								<button ng-class="mdl-button mdl-js-button mdl-color-text--white"/>
-								{{leader.f_name}}
-								</button>
-								<span class="mdl-badge mdl-badge--overlap" data-badge="" ng-show="checkUnreadList(leader.u_name, myUnreadUserList);"></span>
-							</div>
-						</div>
-					</div>
-
-					<div class="mdl-card__actions mdl-card--border">
-						<a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect">Read More</a>
-					</div>
-				</div>
 		</main>
 	</div>
 </div>
