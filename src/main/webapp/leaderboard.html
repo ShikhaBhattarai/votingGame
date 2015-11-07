@@ -1,0 +1,114 @@
+<!-- leaderboard.html -->
+<!-- for The Voting Game -->
+
+<!doctype html>
+<html ng-app="voting-game" lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
+	<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.indigo-pink.min.css">
+	<script src="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.min.js"></script>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="styles.css">
+	<title>The Voting Game Overview</title>
+
+	<!-- Add to homescreen for Chrome on Android -->
+	<meta name="mobile-web-app-capable" content="yes">
+	<link rel="icon" sizes="192x192" href="images/android-desktop.png">
+
+	<!-- Add to homescreen for Safari on iOS -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="Material Design Lite">
+	<link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
+
+	<!-- Tile icon for Win8 (144x144 + tile color) -->
+	<meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+	<meta name="msapplication-TileColor" content="#3372DF">
+
+	<style type="text/css">
+		.chat-window{
+		width: 500px;
+		height: 400px;
+		overflow-y: auto;
+		}
+	</style>
+
+</head>
+<body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base" ng-controller="GameController">
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	<div ng-init="getCurrentPlayer();">
+		<header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+			<div class="mdl-layout__header-row">
+				<!-- Title -->
+				<span class="mdl-layout-title"><img src="favicon.ico" alt="logo" height="50" width="50">&nbsp&nbspThe Voting Game</span>
+				<!-- Add spacer, to align navigation to the right -->
+				<div class="mdl-layout-spacer"></div>
+				<!-- Navigation. We hide it in small screens. -->
+				<nav class="mdl-navigation mdl-layout--large-screen-only">
+					<span class="mdl-layout-title">Welcome, {{f_name}}!&nbsp&nbsp&nbsp&nbsp</span>
+					<form method="post" action="/the-voting-game/login.html">
+						<button class="mdl-button mdl-button--raised mdl-js-button mdl-button--accent" ng-click="logout();">Logout</button>
+					</form>
+				</nav>
+			</div>
+			<div class="mdl-layout--large-screen-only mdl-layout__header-row">
+				<div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+					<a href="home.html" class="mdl-layout__tab">Overview</a>
+					<a href="invite.html" class="mdl-layout__tab">Create</a>
+					<a href="#join" class="mdl-layout__tab">Join</a>
+					<a href="#start" class="mdl-layout__tab">Start</a>
+					<a href="leaderboard.html" class="mdl-layout__tab is-active">Leaderboard</a>
+				</div>
+			</div>
+
+		</header>
+		<main class="mdl-layout__content">
+			<div class="mdl-layout__tab-panel is-active" id="leaderboard">
+				<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+					<div class="mdl-card mdl-cell mdl-cell--12-col">
+						<div class="mdl-layout mdl-color--indigo mdl-color-text--white">
+							<span class="mdl-layout-title">Leaderboard</span>
+							<div ng-show="leaders.length == 0" style="padding:20px">
+								There are no leaders <i class="material-icons">mood_bad</i>
+							</div>
+							<div ng-show="leaders.length > 0">
+								<div ng-repeat="leader in leaders" style="padding:20px">
+									<button ng-class="mdl-button mdl-js-button mdl-color-text--blue" ng-click="selectPlayer(player.u_name, players);"/>
+									{{leader.f_name}} {{leader.l_name}} ... {{leader.g_won}}
+									</button>
+									<span class="mdl-badge mdl-badge--overlap" data-badge="" ng-show="checkUnreadList(player.u_name, myUnreadUserList);"></span>
+								</div>
+							</div>
+						</div>
+
+						<div class="mdl-card__actions">
+							<!-- still need to code create(), join(), start(), and leaderboard() functions -->
+							<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-hide="showStart" ng-click="create();" ng-disabled="createSection.game_id.$invalid">Create Game</button>
+							<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-hide="showStart" ng-click="join();">Join Game</button>
+							<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="start();" ng-show="showStart" ng-disabled="createSection.game_id.$invalid">Start Game</button>
+							<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-hide="showStart" ng-click="getLeaders();" ng-disabled="createSection.game_id.$invalid">Leaderboard</button>
+						</div>
+					</div>
+					<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn3">
+						<i class="material-icons">more_vert</i>
+					</button>
+					<ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn3">
+						<li class="mdl-menu__item">Lorem</li>
+						<li class="mdl-menu__item" disabled>Ipsum</li>
+						<li class="mdl-menu__item">Dolor</li>
+					</ul>
+				</section>
+			</div>
+		</main>
+	</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+
+<script src="./ng-voting-game.js"></script>
+
+</body>
+</html>

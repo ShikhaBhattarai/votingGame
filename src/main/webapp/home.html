@@ -1,0 +1,193 @@
+<!-- home.html -->
+<!-- for The Voting Game -->
+
+<!doctype html>
+<html ng-app="voting-game" lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
+	<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.indigo-pink.min.css">
+	<script src="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.min.js"></script>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="styles.css">
+	<title>The Voting Game Overview</title>
+
+	<!-- Add to homescreen for Chrome on Android -->
+	<meta name="mobile-web-app-capable" content="yes">
+	<link rel="icon" sizes="192x192" href="images/android-desktop.png">
+
+	<!-- Add to homescreen for Safari on iOS -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="Material Design Lite">
+	<link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
+
+	<!-- Tile icon for Win8 (144x144 + tile color) -->
+	<meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+	<meta name="msapplication-TileColor" content="#3372DF">
+
+	<style type="text/css">
+		.chat-window{
+		width: 500px;
+		height: 400px;
+		overflow-y: auto;
+		}
+	</style>
+
+</head>
+<body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base" ng-controller="GameController">
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	<div ng-init="getCurrentPlayer();">
+		<header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+			<div class="mdl-layout__header-row">
+				<!-- Title -->
+				<span class="mdl-layout-title"><img src="favicon.ico" alt="logo" height="50" width="50">&nbsp&nbspThe Voting Game</span>
+				<!-- Add spacer, to align navigation to the right -->
+				<div class="mdl-layout-spacer"></div>
+				<!-- Navigation. We hide it in small screens. -->
+				<nav class="mdl-navigation mdl-layout--large-screen-only">
+					<span class="mdl-layout-title">Welcome, {{f_name}}!&nbsp&nbsp&nbsp&nbsp</span>
+					<form method="post" action="/the-voting-game/login.html">
+						<button class="mdl-button mdl-button--raised mdl-js-button mdl-button--accent" ng-click="logout();">Logout</button>
+					</form>
+				</nav>
+			</div>
+			<div class="mdl-layout--large-screen-only mdl-layout__header-row">
+				<div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+					<a href="home.html" class="mdl-layout__tab is-active">Overview</a>
+					<a href="invite.html" class="mdl-layout__tab">Create</a>
+					<a href="#join" class="mdl-layout__tab">Join</a>
+					<a href="#start" class="mdl-layout__tab">Start</a>
+					<a href="leaderboard.html" class="mdl-layout__tab">Leaderboard</a>
+					<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="bulkupload" ng-click="bulkUpload();">
+						<i class="material-icons" role="presentation">add</i>
+						<span class="visuallyhidden">Bulk Card Upload</span>
+					</button>
+				</div>
+			</div>
+		</header>
+		<main class="mdl-layout__content">
+			<div class="mdl-layout__tab-panel is-active" id="overview">
+
+				<!-- Overview Section -->
+				<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+					<header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white">
+						<img src="the_voting_game-5.jpg" alt="logo" height="380" width="250">
+					</header>
+					<div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
+						<div class="mdl-card__supporting-text">
+							<h3 class="ng-binding">Overview</h3>
+							<p>The Voting Game is an adult party game that uncovers the hilarious truth behind your friendships.</p>
+							<p>Each round, vote anonymously for the player that is described by the question. The votes are tallied and the true nature of your friendships is revealed!</p>
+							<p>Question, Vote, Reveal, Guess</p>
+						</div>
+						<div class="mdl-card__actions">
+							<!-- for if we need detailed rules -->
+							<a href="#" class="mdl-button">How to Play</a>
+						</div>
+					</div>
+				</section>
+
+				<!-- Leaderboard Section -->
+				<section>
+					<div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
+						<div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
+							<div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
+								<h2 class="mdl-card__title-text">Leaderboard</h2>
+							</div>
+							<div class="mdl-layout__supporting-text mdl-color-text--grey-600">
+								<div ng-init="getLeaders();">
+									<div ng-show="leaders.length == 0" style="padding:20px">
+										There are no leaders <i class="material-icons">mood_bad</i>
+									</div>
+									<div ng-show="leaders.length > 0">
+										<table class="mdl-data-table mdl-js-data-table">
+											<thead>
+											<tr>
+												<th class="mdl-data-table__cell--non-numeric mdl-color-text--grey-800">Player</th>
+												<th class="mdl-color-text--grey-800">Games Won</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr ng-repeat="leader in leaders" style="padding:20px">
+												<td class="mdl-data-table__cell--non-numeric">{{leader.f_name}}</td>
+												<td>{{leader.g_won}}</td>
+											</tr>
+											</tbody>
+										</table>
+										<!-- <span class="mdl-badge mdl-badge--overlap" data-badge="" ng-show="checkUnreadList(leader.u_name, myUnreadUserList);"></span> -->
+										<!-- </div> -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- Player Options Section -->
+				<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+					<div class="mdl-card mdl-cell mdl-cell--12-col">
+						<div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+							<h4 class="mdl-cell mdl-cell--12-col">Player Options</h4>
+							<div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+								<div class="section__circle-container__circle mdl-color--primary"></div>
+							</div>
+							<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+								<h5>Create a Game</h5>
+								Invite at least 5 of your friends. &nbspYou will be notified when 5 players have joined your game!
+							</div>
+							<div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+								<div class="section__circle-container__circle mdl-color--primary"></div>
+							</div>
+							<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+								<h5>Join a Game</h5>
+								You must be popular! &nbspYou have been invited to join a game.
+							</div>
+							<div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone" ng-show="showStart">
+								<div class="section__circle-container__circle mdl-color--primary"></div>
+							</div>
+							<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone" ng-show="showStart">
+								<h5>Start a Game</h5>
+								Your friends like you! &nbspYou are all ready to play <i>The Voting Game!</i>
+							</div>
+							<!-- <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+								<div class="section__circle-container__circle mdl-color--primary"></div>
+							</div>
+							<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+								<h5>Leaderboard</h5>
+								Full of yourself much? &nbspSee how you rank.
+							</div> -->
+						</div>
+						<div class="mdl-card__actions">
+							<!-- still need to code create(), join(), start(), and leaderboard() functions -->
+							<!--<form method="post" action="/the-voting-game/invite.html"> -->
+							<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-hide="showStart" ng-click="create();" ng-disabled="createSection.game_id.$invalid">Create Game</button>
+							<!-- </form> -->
+
+							<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-hide="showStart" ng-click="join();">Join Game</button>
+							<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="start();" ng-show="showStart" ng-disabled="createSection.game_id.$invalid">Start Game</button>
+							<!-- <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-hide="showStart" ng-click="getLeaders();" ng-disabled="createSection.game_id.$invalid">Leaderboard</button> -->
+						</div>
+					</div>
+					<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn2">
+						<i class="material-icons">more_vert</i>
+					</button>
+					<ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn2">
+						<li class="mdl-menu__item">Lorem</li>
+						<li class="mdl-menu__item" disabled>Ipsum</li>
+						<li class="mdl-menu__item">Dolor</li>
+					</ul>
+				</section>
+			</div>
+		</main>
+	</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+
+<script src="./ng-voting-game.js"></script>
+
+</body>
+</html>

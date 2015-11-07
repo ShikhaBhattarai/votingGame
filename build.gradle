@@ -1,28 +1,45 @@
-group 'com.mycompany'
-version '1.0-SNAPSHOT'
-
-apply plugin: 'java'
-apply plugin: 'war'
-
-sourceCompatibility = 1.5
-
-repositories {
-    mavenCentral()
+buildscript {
+    repositories {
+    	mavenCentral()
+      	jcenter()
+    }
 }
 
+repositories {
+	mavenCentral()
+    jcenter()
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'war'
+apply plugin: 'jetty'
+
+war {
+    baseName = 'the-voting-game'
+}
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-        runtime 'mysql:mysql-connector-java:5.1.16'
+    
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    providedCompile 'javax.websocket:javax.websocket-api:1.1'
 
-        providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
-        providedCompile 'javax.websocket:javax.websocket-api:1.1'
-        compile("javax.servlet:jstl:1.2")
+    compile 'javax.servlet:jstl:1.2'
+    compile 'mysql:mysql-connector-java:5.1.36'
+    compile 'com.google.code.gson:gson:2.4'
+    compile 'com.google.guava:guava:18.0'
+
+    testCompile("junit:junit:4.12")
+}
+
+task runTC (dependsOn: build) {
+    copy {
+        from "./build/libs"
+        into "/Library/Tomcat/webapps"
+        include "*.war"
     }
-
-    task tcDeploy(dependsOn: build) {
-        copy {
-            from 'build/libs/'
-            into '/Users/shikhabhattarai/Documents/tomcat/webapps'
-
-        }
-    }
+}

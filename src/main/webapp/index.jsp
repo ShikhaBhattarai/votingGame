@@ -1,10 +1,14 @@
 <%--
+  index.jsp
+  for The Voting Game
+
   Created by IntelliJ IDEA.
   User: shikhabhattarai
   Date: 11/2/15
   Time: 12:58 PM
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <head>
 
@@ -33,7 +37,7 @@
     <main class="mdl-layout__content">
         <div class="mdl-card mdl-shadow--6dp">
             <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
-                <h4 class="mdl-card__title-text">Voting Game</h4>
+                <h4 class="mdl-card__title-text">The Voting Game</h4>
             </div>
 			<div class="mdl-layout__content">
 			<p> Welcome to the Voting Game!</p>
@@ -51,7 +55,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
 
-<script src="ng-chatty-cathy.js"></script>
+<script src="ng-voting-game.js"></script>
 
 
 </body>

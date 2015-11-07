@@ -1,0 +1,24 @@
+CREATE DATABASE IF NOT EXISTS the_voting_game;
+USE the_voting_game;
+
+CREATE TABLE IF NOT EXISTS players (
+	e_mail VARCHAR(40) NOT NULL,
+	f_name VARCHAR(20) NOT NULL,
+	l_name VARCHAR(20) NOT NULL,
+	u_name VARCHAR(20) NOT NULL,
+	g_won INT DEFAULT 0,
+	PRIMARY KEY (u_name)
+	);
+
+CREATE TABLE IF NOT EXISTS cards (
+	card_no INT NOT NULL AUTO_INCREMENT,
+	question BLOB NOT NULL,
+	creator VARCHAR(20) NOT NULL DEFAULT 'admin',
+	PRIMARY KEY (card_no)
+	);
+
+CREATE TABLE IF NOT EXISTS per_game_stats (
+	g_id INT NOT NULL AUTO_INCREMENT,
+	u_name VARCHAR(20) NOT NULL,
+	score INT DEFAULT 0
+	);
