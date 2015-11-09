@@ -1,4 +1,4 @@
-// BulkCardUpload.java
+// BulkCardUploadServlet.java
 // for The Voting Game
 
 package edu.nku.csc456.votingGame.web.servlet;
@@ -15,7 +15,7 @@ import javax.servlet.ServletException;
 
 @WebServlet("/upload")
 @MultipartConfig
-public class BulkCardUpload extends HttpServlet {
+public class BulkCardUploadServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String question = request.getParameter("question"); // Retrieves <input type="text" name="question">
         Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">

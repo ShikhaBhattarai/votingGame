@@ -178,7 +178,20 @@ gameApp.controller('GameController', function($scope, $http) {
                     var json = resp.data;
                     console.log(json.result)
                     if (json.result == "created") {
-                        window.location = "/the-voting-game/invite.html";
+                        $http.post("/the-voting-game/getgameid", {}, {
+                            headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            params: {
+                                "action": "getgameid",
+                                "g_creator": $scope.g_creator
+                            }
+                        })
+                            .then(function(resp) {
+                                window.location = "/the-voting-game/invite.html";
+                            })
+                    }
+
                     //} else {
                     //    $scope.showStart = true;
                     //}
