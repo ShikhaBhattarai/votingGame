@@ -46,7 +46,7 @@ public class PlayerServlet extends HttpServlet {
 			resp.setContentType("application/json");
 			resp.getWriter().write(json);
 			resp.flushBuffer();
-		// called by ng-voting-game getCurrentUser() function
+		// called by ng-voting-game getCurrentPlayer() function
 		} else if (action.equals("currentplayer")) {
 			HttpSession session = req.getSession(false);
 			String u_name = (String) session.getAttribute("u_name");
@@ -64,6 +64,18 @@ public class PlayerServlet extends HttpServlet {
 			List<Player> leaders = prepo.leaderList();
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			String json = gson.toJson(leaders);
+
+			resp.setContentType("application/json");
+			resp.getWriter().write(json);
+			resp.flushBuffer();
+		// called by ng-voting-game getInvitedPlayer() function
+		} else if (action.equals("invitedplayer")) {
+			HttpSession session = req.getSession(false);
+			String u_name = (String) session.getAttribute("u_name");
+			// calls PlayerRepository findPlayer method
+			Player p = prepo.findPlayer(u_name);
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			String json = gson.toJson(p);
 
 			resp.setContentType("application/json");
 			resp.getWriter().write(json);

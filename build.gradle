@@ -27,6 +27,7 @@ dependencies {
     
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
     providedCompile 'javax.websocket:javax.websocket-api:1.1'
+    providedCompile 'javax.mail:mail:1.4'
 
     compile 'javax.servlet:jstl:1.2'
     compile 'mysql:mysql-connector-java:5.1.36'
@@ -36,7 +37,7 @@ dependencies {
     testCompile("junit:junit:4.12")
 }
 
-task runTC (dependsOn: build) {
+task tcDeploy (dependsOn: build) {
     copy {
         from "./build/libs"
         into "/Library/Tomcat/webapps"

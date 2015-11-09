@@ -1,0 +1,54 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.deep_orange-orange.min.css">
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <title>New Game</title>
+    <link rel="stylesheet" type="text/css" href="css/vote.css">
+</head>
+<body>
+<div class="center-page">
+    <div class="mdl-grid mdl-layout__header">
+        <div class="mdl-cell mdl-cell--2-col"></div>
+        <div class="mdl-cell mdl-cell--8-col">
+            <h2>Welcome ${sessionScope.fullName}!</h2>
+        </div>
+        <div class="mdl-cell mdl-cell--2-col">
+            <form method="get" action="/votingGame/vote">
+                <input class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" style="margin-top:27px;" type="submit" value="Back" name="back">
+            </form>
+        </div>
+    </div>
+
+    <div class="mdl-grid">
+        <div class="left-input-column mdl-cell mdl-cell--6-col">
+            <h4>Add Custom Questions to this Game</h4>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <textarea class="mdl-textfield__input" id="question" rows=2 onkeypress="addQ(event);"></textarea>
+                <label class="mdl-textfield__label" for="question">Type Question</label>
+            </div>
+            <div id="questions" class="current"></div>
+        </div>
+        <div class="left-input-column mdl-cell mdl-cell--2-col">
+            <h4>Joined Users</h4>
+            <div id="joined" class="current"></div>
+        </div>
+        <div class="left-input-column mdl-cell mdl-cell--2-col">
+            <h4>Invited Users</h4>
+            <div id="invited" class="current"></div>
+        </div>
+        <div class="left-input-column mdl-cell mdl-cell--2-col">
+            <h4>Select Users</h4>
+            <div id="users" class="current"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+		var userid = "${sessionScope.userid}";
+		var gameid = "${sessionScope.gameid}";
+	</script>
+<script src="javascript/newVote.js"></script>
+</body>
+</html>

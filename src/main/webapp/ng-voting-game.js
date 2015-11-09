@@ -68,15 +68,41 @@ gameApp.controller('GameController', function($scope, $http) {
             });
     }
 
-    $scope.selectPlayer = function(selectedPlayername, players) {
-        if (connection && selectedPlayername != $scope.u_name && selectedPlayername != null) {
-            var chatBox = document.getElementById('chat-box-1');
+    $scope.getInvitedPlayer = function() {
+            $http.get("/the-voting-game/players?action=invitedplayer")
+                .then(function(resp) {
+                    var data = resp.data;
+                    $scope.e_mail = data.e_mail;
+                    $scope.f_name = data.f_name;
+                    $scope.l_name = data.l_name;
+                    //$scope.u_name = data.u_name;
+                    //$scope.g_won = data.g_won;
+                    //$scope.getPlayers();
+                    //$scope.populateUnreadList();
+                    $scope.invitePlayer;
+                });
+        }
+
+    $scope.invitePlayer = function(String e_mail, String f_name, String l_name) {
+            $http.get("/the-voting-game/invite?action=inviteplayer")
+                .then(function(resp) {
+                    $scope.players = resp.data;
+                    if (typeof $scope.otherPlayer == 'undefined') {
+                        $scope.selectPlayer($scope.players);
+                    }
+                });
+            setTimeout($scope.getPlayers, 2000);
+        }
+
+    $scope.invitePlayer = function(invitedPlayer, players) {
+        if (connection && invitedPlayer != $scope.u_name && invitedPlayer != null) {
+            //var chatBox = document.getElementById('chat-box-1');
             for (var p in players) {
-                if (players[p].u_name == selectedPlayername) {
-                    $scope.otherPlayE = players[p].e_mail;
-                    $scope.otherPlayerF = players[p].f_name;
-                    $scope.otherPlayerL = players[p].l_name;
-                    $scope.otherPlayerU = players[p].u_name;
+                if (players[p].u_name == invitedPlayer) {
+                    $scope.invitedPlayerE = players[p].e_mail;
+                    //$scope.otherPlayerF = players[p].f_name;
+                    //$scope.otherPlayerL = players[p].l_name;
+                    //$scope.otherPlayerU = players[p].u_name;
                 }
             }
             //$scope.clearUnread($scope.u_name, selectedU_name);
@@ -141,20 +167,20 @@ gameApp.controller('GameController', function($scope, $http) {
         }
     }
 
-    $scope.create = function() {
-            $http.post("/the-voting-game/create", {}, {
+    $scope.creategame = function(String u_name) {
+            $http.post("/the-voting-game/creategame", {}, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
                 params: {
-                    "action": "create",
+                    "action": "creategame",
                     "u_name": $scope.u_name
                 }
             })
                 .then(function(resp) {
-                    //var json = resp.data;
-                    //console.log(json.result)
-                    //if (json.result == "create") {
+                    var json = resp.data;
+                    console.log(json.result)
+                    if (json.result == "created") {
                         window.location = "/the-voting-game/invite.html";
                     //} else {
                     //    $scope.showStart = true;

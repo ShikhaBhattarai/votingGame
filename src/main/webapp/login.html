@@ -43,8 +43,8 @@
             <!-- -------------------------------------- -->
 
             <div class="mdl-card__supporting-text" ng-init="showReg=false">
-                <div class="mdl-textfield mdl-js-textfield" ng-show="showReg" ng-form name="e_mailSection" novalidate>
-                    <input class="mdl-textfield__input" type="text" name="e_mail" ng-model="e_mail" ng-required="showReg" id="e_mail"/>
+                <div class="mdl-textfield mdl-js-textfield" ng-show="showReg" ng-form name="e_mailSection">
+                    <input class="mdl-textfield__input" type="email" name="e_mail" ng-model="e_mail" ng-required="showReg" id="e_mail"/>
                     <label class="mdl-textfield__label" for="e_mail">E-mail</label>
                 </div>
                 <div class="mdl-textfield mdl-js-textfield" ng-show="showReg" ng-form name="f_nameSection" novalidate>
@@ -56,7 +56,7 @@
                     <label class="mdl-textfield__label" for="l_name">Last Name</label>
                 </div>
                 <div class="mdl-textfield mdl-js-textfield" ng-form name="u_nameSection" novalidate>
-                    <input class="mdl-textfield__input" type="text" name="u_name" ng-model="u_name" ng-required="true" id="u_name"/>
+                    <input class="mdl-textfield__input" type="text" name="u_name" ng-model="u_name" ng-required="true" id="u_name" autofocus/>
                     <label class="mdl-textfield__label" for="u_name">Username</label>
                 </div>
                 <div class="mdl-card__actions mdl-card--border">
