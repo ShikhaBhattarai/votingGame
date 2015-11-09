@@ -3,12 +3,14 @@ package edu.nku.csc456.votingGame.web.listener;
 import edu.nku.csc456.votingGame.web.repository.CardRepository;
 import edu.nku.csc456.votingGame.web.repository.GameRepository;
 import edu.nku.csc456.votingGame.web.repository.PlayerRepository;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.servlet.annotation.WebListener;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 
 @WebListener
 public class MysqlContextListener implements ServletContextListener {
@@ -17,6 +19,7 @@ public class MysqlContextListener implements ServletContextListener {
     public static final String PLAYER_REPOSITORY_KEY = "playerRepository";
     public static final String CARD_REPOSITORY_KEY = "cardRepository";
     public static final String GAME_REPOSITORY_KEY = "gameRepository";
+
 
     public static Connection connection;
 
@@ -46,6 +49,10 @@ public class MysqlContextListener implements ServletContextListener {
             sce
                 .getServletContext()
                 .setAttribute(GAME_REPOSITORY_KEY, new GameRepository(connection));
+
+            //sce
+            //    .getServletContext()
+            //    .setAttribute(UNREAD_REPOSITORY_KEY, new UnreadRepository(connection));
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -105,9 +105,6 @@ gameApp.controller('GameController', function($scope, $http) {
                     //$scope.otherPlayerU = players[p].u_name;
                 }
             }
-            //$scope.clearUnread($scope.u_name, selectedU_name);
-            //chatBox.innerHTML = "";
-            //getMessages($scope.u_name, selectedU_name);
         }
     }
 

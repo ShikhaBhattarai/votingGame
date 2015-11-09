@@ -25,11 +25,12 @@ public class GameEndpoint {
 
 	@OnClose
 	public void onClose(Session session) {
-		//PlayerRepository urepo = new PlayerRepository(MysqlContextListener.connection);
-		//LocalDateTime ldt = LocalDateTime.now();
 		System.out.println("Game session closed (id: " + session.getId() + ")");
-		//System.out.println("De-registering player: " + SessionHandler.getInstance().getPlayer(session) + " for session " + session.getId());
-		//SessionHandler.getInstance().removeSession(SessionHandler.getInstance().getPlayer(session), session);
+		PlayerRepository urepo = new PlayerRepository(MysqlContextListener.connection);
+		LocalDateTime ldt = LocalDateTime.now();
+		System.out.println("Game session closed (id: " + session.getId() + ")");
+		System.out.println("De-registering player: " + SessionHandler.getInstance().getPlayer(session) + " for session " + session.getId());
+		SessionHandler.getInstance().removeSession(SessionHandler.getInstance().getPlayer(session), session);
 	}
 
 	@OnMessage

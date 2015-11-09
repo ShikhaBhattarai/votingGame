@@ -1,8 +1,6 @@
 <!-- invite.html -->
 <!-- for The Voting Game -->
 
-
-
 <!doctype html>
 <html ng-app="voting-game" lang="en">
 <head>
@@ -80,18 +78,6 @@
 						There are no players <i class="material-icons">mood_bad</i>
 					</div>
 					<div ng-show="players.length > 0">
-						<!--<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
-							<thead>
-								<tr>
-									<th class="mdl-data-table__cell--non-numeric mdl-color-text--grey-800">Name</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="player in players">
-									<td class="mdl-data-table__cell--non-numeric">{{player.f_name}}</td>
-								</tr>
-							</tbody>
-						</table> -->
 						<div ng-repeat="player in players" style="padding:0px 34px">
                             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" ng-click="getInvitedPlayer();" ng-hide="player.u_name == u_name"/>
                             {{player.u_name}}
