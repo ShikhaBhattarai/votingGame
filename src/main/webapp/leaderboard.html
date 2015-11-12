@@ -13,7 +13,7 @@
 	<script src="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.min.js"></script>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="styles.css">
-	<title>The Voting Game Overview</title>
+	<title>The Voting Game Leaderboard</title>
 
 	<!-- Add to homescreen for Chrome on Android -->
 	<meta name="mobile-web-app-capable" content="yes">
@@ -34,6 +34,7 @@
 		width: 600px;
 		height: 500px;
 		overflow-y: auto;
+		align: center;
 		}
 	</style>
 
@@ -67,9 +68,9 @@
 
 		</header>
 		<main class="mdl-layout__content" align="center">
-			<div class="mdl-layout__tab-panel is-active" id="leaderboard">
-				<section class="section--center mdl-grid mdl-grid--cell--4-col-desktop mdl-shadow--2dp">
+			<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
 					<div class="mdl-card mdl-cell mdl-cell--12-col">
+						<div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
 						<div class="mdl-layout mdl-color--indigo mdl-color-text--white">
 							<span class="mdl-layout-title">Leaderboard</span>
 							<div ng-show="leaders.length == 0" style="padding:20px">
