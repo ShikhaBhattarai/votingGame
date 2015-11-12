@@ -40,7 +40,7 @@
 </head>
 <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base" ng-controller="GameController">
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-	< ng-init="getCurrentPlayer();">
+	<!--<"ng-init="getCurrentPlayer();">-->
 		<header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
 			<div class="mdl-layout__header-row">
 				<!-- Title -->
@@ -91,11 +91,11 @@
 					</div>
 				</section>
 
+				
 				<!-- Leaderboard Section -->
-				<section>
-					<div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
-						<div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
-							<div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
+				<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+					<div class="mdl-card mdl-cell mdl-cell--12-col">
+						<div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
 								<h2 class="mdl-card__title-text">Leaderboard</h2>
 							</div>
 							<div class="mdl-layout__supporting-text mdl-color-text--grey-600">
@@ -123,10 +123,9 @@
 									</div>
 								</div>
 							</div>
-						</div>
 					</div>
 				</section>
-			</div>
+			
 
 				<!-- Player Options Section -->
 				<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
