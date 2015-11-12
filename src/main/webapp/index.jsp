@@ -44,9 +44,9 @@
 			<p>Please log in or register to play.</p>
 			</div>
                 <div class="mdl-card__actions mdl-card--border">
-                    <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-hide="showReg" ng-click="login.html" ng-disabled="usernameSection.username.$invalid">Log in</button>
-                    <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="showReg=true" ng-hide="showReg">Register</button>
-                    <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="register();" ng-show="showReg" ng-disabled="firstnameSection.firstname.$invalid || lastnameSection.lastname.$invalid || usernameSection.username.$invalid">Register</button>
+                    <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-hide="showReg" ng-click="/login.html" ng-disabled="usernameSection.username.$invalid">Log in</button>
+                    <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="/login.html" ng-hide="showReg">Register</button>
+                    <!---<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="register();" ng-show="showReg" ng-disabled="firstnameSection.firstname.$invalid || lastnameSection.lastname.$invalid || usernameSection.username.$invalid">Register</button> --->
                 </div>
             </div>
         </div>
