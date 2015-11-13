@@ -51,7 +51,7 @@ gameApp.controller('GameController', function($scope, $http) {
         }
 
     $scope.bulkUpload = function() {
-                window.location = "/the-voting-game/upload.html";
+                window.location = "/WEB-INF/upload.html";
     }
 
     $scope.getCurrentPlayer = function() {
@@ -290,7 +290,7 @@ gameApp.controller('LoginController', function($scope, $http) {
                 var json = resp.data;
                 console.log(json.result)
                 if (json.result == "loginSuccess") {
-                    window.location = "/the-voting-game/home.html";
+                    window.location = "/WEB-INF/home.html";
                 } else {
                     $scope.showReg = true;
                 }
@@ -313,9 +313,9 @@ gameApp.controller('LoginController', function($scope, $http) {
             .then(function(resp) {
                 var json = resp.data;
                 if (json.result == "registerSuccess") {
-                    window.location = "/the-voting-game/home.html";
+                    window.location = "/WEB-INF/home.html";
                 } else if (json.result == "alreadyRegistered") {
-                    window.location = "/the-voting-game/home.html";
+                    window.location = "/WEB-INF/home.html";
                 }
             });
     }
