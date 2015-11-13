@@ -13,7 +13,7 @@
 	<script src="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.min.js"></script>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="styles.css">
-	<title>The Voting Game Invites</title>
+	<title>The Voting Game Overview</title>
 
 	<!-- Add to homescreen for Chrome on Android -->
 	<meta name="mobile-web-app-capable" content="yes">
@@ -61,7 +61,7 @@
 					<a href="invite.html" class="mdl-layout__tab is-active">Create</a>
 					<a href="#join" class="mdl-layout__tab">Join</a>
 					<a href="#start" class="mdl-layout__tab">Start</a>
-					<a href="leaderboard.html" class="mdl-layout__tab">Leaderboard</a>
+					<a href="http://localhost:8080/the-voting-game/home.html#leaderboard" class="mdl-layout__tab">Leaderboard</a>
 					<!-- <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="add">
 						<i class="material-icons" role="presentation">add</i>
 						<span class="visuallyhidden">Add</span>
@@ -98,8 +98,11 @@
 						<div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
 							<div class="mdl-card__supporting-text">
 								<h3 class="ng-binding">Create a Game</h3>
-								<p>Select at least five players.</p>
-								<p>Click Invite.</p>
+								<p>Select at least five players from the Players list.</p>
+								<p>
+									They will be invited to join you in playing The Voting Game with game id: {{g_id}}.</br>
+									Click Invite.
+								</p>
 								<p>You will be notified when there are enough players to start your game.</p>
 								<!-- create invitation form -->
 								<div class="mdl-card__supporting-text">
@@ -153,7 +156,7 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
 
-<script src="ng-voting-game.js"></script>
+<script src="./ng-voting-game.js"></script>
 
 </body>
 </html>

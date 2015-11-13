@@ -39,8 +39,8 @@
 
 </head>
 <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base" ng-controller="GameController">
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-	<!--<"ng-init="getCurrentPlayer();">-->
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" ng-init="getCurrentPlayer()">
+	<!--<div ng-init="getCurrentPlayer()">-->
 		<header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
 			<div class="mdl-layout__header-row">
 				<!-- Title -->
@@ -64,13 +64,17 @@
 					<a href="#leaderboard" class="mdl-layout__tab">Leaderboard</a>
 					<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="bulkupload" ng-click="bulkUpload();" value="Bulk Card Upload">
 						<i class="material-icons" role="presentation">add</i>
+						<!-- Rich Tooltip -->
+						<div class="mdl-tooltip" for="tt3">
+							Upload <strong>file.txt</strong>
+						</div>
 						<span class="visuallyhidden">Bulk Card Upload</span>
 					</button>
 				</div>
 			</div>
 		</header>
 		<main class="mdl-layout__content">
-			<div class="mdl-layout__tab-panel is-active" id="overview">
+			<div class="mdl-layout__tab-panel is-active">
 
 				<!-- Overview Section -->
 				<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
@@ -159,7 +163,7 @@
 					<div class="mdl-card__actions">
 						<!-- still need to code create(), join(), start(), and leaderboard() functions -->
 						<!--<form method="post" action="/the-voting-game/invite.html"> -->
-						<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-hide="showStart" ng-click="creategame();" ng-disabled="createSection.game_id.$invalid">Create Game</button>
+						<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-hide="showStart" ng-click="createGame();" ng-disabled="createSection.game_id.$invalid">Create Game</button>
 						<!-- </form> -->
 
 						<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-hide="showStart" ng-click="join();">Join Game</button>
@@ -167,10 +171,8 @@
 					</div>
 				</section>
 			</div>
-		</div>
-	</main>
-</div>
-</div>
+		</main>
+	</div>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
 
 <script src="ng-voting-game.js"></script>

@@ -32,7 +32,7 @@ gameApp.controller('GameController', function($scope, $http) {
             .then(function(resp) {
                 $scope.players = resp.data;
                 if (typeof $scope.otherPlayer == 'undefined') {
-                    $scope.selectPlayer($scope.players);
+                    $scope.selectedPlayer($scope.players);
                 }
             });
         setTimeout($scope.getPlayers, 2000);
@@ -51,7 +51,7 @@ gameApp.controller('GameController', function($scope, $http) {
         }
 
     $scope.bulkUpload = function() {
-                window.location = "/WEB-INF/upload.html";
+                window.location = "/the-voting-game/upload.html";
     }
 
     $scope.getCurrentPlayer = function() {
@@ -68,7 +68,7 @@ gameApp.controller('GameController', function($scope, $http) {
             });
     }
 
-    $scope.getInvitedPlayer = function() {
+   /* $scope.getInvitedPlayer = function() {
             $http.get("/the-voting-game/players?action=invitedplayer")
                 .then(function(resp) {
                     var data = resp.data;
@@ -81,20 +81,33 @@ gameApp.controller('GameController', function($scope, $http) {
                     //$scope.populateUnreadList();
                     $scope.invitePlayer;
                 });
-        }
+        }*/
 
-    $scope.invitePlayer = function(String e_mail, String f_name, String l_name) {
-            $http.get("/the-voting-game/invite?action=inviteplayer")
-                .then(function(resp) {
-                    $scope.players = resp.data;
-                    if (typeof $scope.otherPlayer == 'undefined') {
-                        $scope.selectPlayer($scope.players);
-                    }
-                });
-            setTimeout($scope.getPlayers, 2000);
+   $scope.getInvitedPlayer = function(selectedPlayer, players) {
+        for (var p in players) {
+            $scope.e_mail = players[p].e_mail;
+            $scope.f_name = players[p].f_name;
+            $scope.l_name = players[p].l_name;
+            //$scope.u_name = data.u_name;
+            //$scope.g_won = data.g_won;
+            //$scope.getPlayers();
+            //$scope.populateUnreadList();
+            $scope.invitePlayer;
         }
+   }
 
-    $scope.invitePlayer = function(invitedPlayer, players) {
+   $scope.invitePlayer = function() {
+        $http.get("/the-voting-game/invite?action=inviteplayer")
+            .then(function(resp) {
+                $scope.players = resp.data;
+                if (typeof $scope.otherPlayer == 'undefined') {
+                    $scope.selectedPlayer($scope.players);
+                }
+            });
+        setTimeout($scope.getPlayers, 2000);
+   }
+
+    /*$scope.invitePlayer = function(invitedPlayer, players) {
         if (connection && invitedPlayer != $scope.u_name && invitedPlayer != null) {
             //var chatBox = document.getElementById('chat-box-1');
             for (var p in players) {
@@ -106,7 +119,7 @@ gameApp.controller('GameController', function($scope, $http) {
                 }
             }
         }
-    }
+    }*/
 
     $scope.registerToSocket = function(u_name) {
         sendMessage("register=" + u_name);
@@ -158,13 +171,13 @@ gameApp.controller('GameController', function($scope, $http) {
             });
 
             notification.onclick = function() {
-                $scope.selectPlayer(u_name, $scope.players);
+                $scope.selectedPlayer(u_name, $scope.players);
                 window.focus();
             };
         }
     }
 
-    $scope.creategame = function(String u_name) {
+    $scope.createGame = function(u_name) {
             $http.post("/the-voting-game/creategame", {}, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -178,7 +191,7 @@ gameApp.controller('GameController', function($scope, $http) {
                     var json = resp.data;
                     console.log(json.result)
                     if (json.result == "created") {
-                        $http.post("/the-voting-game/getgameid", {}, {
+                        $http.post("/the-voting-game/creategame", {}, {
                             headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
                             },
@@ -290,7 +303,7 @@ gameApp.controller('LoginController', function($scope, $http) {
                 var json = resp.data;
                 console.log(json.result)
                 if (json.result == "loginSuccess") {
-                    window.location = "/WEB-INF/home.html";
+                    window.location = "/the-voting-game/home.html";
                 } else {
                     $scope.showReg = true;
                 }
@@ -313,9 +326,9 @@ gameApp.controller('LoginController', function($scope, $http) {
             .then(function(resp) {
                 var json = resp.data;
                 if (json.result == "registerSuccess") {
-                    window.location = "/WEB-INF/home.html";
+                    window.location = "/the-voting-game/home.html";
                 } else if (json.result == "alreadyRegistered") {
-                    window.location = "/WEB-INF/home.html";
+                    window.location = "/the-voting-game/home.html";
                 }
             });
     }
