@@ -12,6 +12,7 @@ public class Player {
     String l_name;
     String u_name;
     Integer g_won;
+    Integer g_lost;
     //String lastchatwith;
     //LocalDateTime  lastchattime;
     //boolean online;
@@ -22,12 +23,14 @@ public class Player {
         this.l_name = "";
         this.u_name = "";
         this.g_won = 0;
+        this.g_lost = 0;
     }
 
-    public Player(String f_name,String l_name, Integer g_won) {
+    public Player(String f_name,String u_name, Integer g_won, Integer g_lost) {
         this.f_name = f_name;
-        this.l_name = l_name;
+        this.u_name = u_name;
         this.g_won = g_won;
+        this.g_lost = g_lost;
     }
 
     public Player(String e_mail, String f_name,String l_name, String u_name) {
@@ -65,6 +68,10 @@ public class Player {
         return g_won;
     }
 
+    public Integer getG_lost() {
+        return g_lost;
+    }
+
     /*public boolean isOnline() {
         return online;
     }
@@ -95,6 +102,10 @@ public class Player {
 
     public void setG_won(Integer g_won) {
         this.g_won = g_won;
+    }
+
+    public void setG_lost(Integer g_lost) {
+        this.g_lost = g_lost;
     }
 
     /*public void setOnline(boolean online) {

@@ -16,7 +16,8 @@ public class PlayerRepository {
 	private static final String INSERT_SQL = "INSERT INTO players (e_mail, f_name, l_name, u_name) VALUES (?, ?, ?, ? )";
 	private static final String SELECT_ALL_SQL = "SELECT * FROM players;";
 	private static final String SELECT_PLAYER_SQL = "SELECT * FROM players WHERE u_name = ";
-	private static final String LEADER_SQL = "SELECT f_name, l_name, g_won FROM players ORDER BY g_won DESC;";
+	private static final String LEADER_SQL = "SELECT f_name, u_name, g_won, g_lost FROM players ORDER BY g_won DESC;";
+	private static final String SELECT_JOINED_PLAYERS_SQL = "SELECT * FROM joined";
 	//private static final String UPDATE_USER_LASTCHATTIME_SQL = "UPDATE users SET lastchattime= ? WHERE username = ?";
 	//private static final String UPDATE_USER_LASTCHATWITH_SQL = "UPDATE users SET lastchatwith= ? WHERE username = ?";
 	//private static final String UPDATE_USER_ISONLINE_SQL = "UPDATE users SET isonline= ? WHERE username = ?";
@@ -75,7 +76,7 @@ public class PlayerRepository {
 			ResultSet resultSet = statement.executeQuery(LEADER_SQL);
 			List<Player> leaders = new ArrayList<>();
 			while (resultSet.next()) {
-				Player l = new Player(resultSet.getString("f_name"), resultSet.getString("l_name"), resultSet.getInt("g_won"));
+				Player l = new Player(resultSet.getString("f_name"), resultSet.getString("u_name"), resultSet.getInt("g_won"), resultSet.getInt("g_lost"));
 				leaders.add(l);
 			}
 			return leaders;
@@ -84,6 +85,22 @@ public class PlayerRepository {
 		}
 		return Collections.emptyList();
 	}
+
+	// joinedPlayers still in progress - Angel
+	/*public List<Player> joinedPlayers() {
+		try (Statement statement = connection.createStatement()) {
+			ResultSet resultSet = statement.executeQuery(SELECT_JOINED_PLAYERS_SQL);
+			List<Player> joinedPlayers = new ArrayList<>();
+			while (resultSet.next()) {
+				Player j = new Player(resultSet.getInt("g_id"), resultSet.getString("g_creator"), resultSet.getString("f_name"));
+				joinedPlayers.add(j);
+			}
+			return joinedPlayers;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return Collections.emptyList();
+	}*/
 
 	/*
 	public void updateUserOnlineStatus(String username, boolean isonline) {
