@@ -28,19 +28,19 @@ import javax.servlet.http.HttpServletResponse;
 public class SendEmailInviteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Integer g_id = Integer.parseInt(req.getParameter("g_id"));
+        String g_id = req.getParameter("g_id");
         String g_creator = req.getParameter("g_creator");
         String e_mail = req.getParameter("e_mail");
-        System.out.println("g_id: " + g_id + "g_creator: " + "e_mail: " + e_mail);
+        System.out.println("g_id: " + g_id + " g_creator: " + g_creator + " e_mail: " + e_mail);
 
         sendEmail(g_id, g_creator, e_mail);
     }
 
-    public static void sendEmail(Integer g_id, String g_creator , String recipient) {
+    public static void sendEmail(String g_id, String g_creator , String recipient) {
         final String emailAddress = "URStem2015@gmail.com";
         final String passWord = "UR$t3mNKU";
         String inviteSubject = "You have been invited to play The Voting Game!";
-        String inviteBody = "Hello there!" + "\n\nYou have been invited to play The Voting Game by " + g_creator + "." + "\n\nIf you would like to play, just <a href=\"http://localhost:8080/the-voting-game\">Login</a> or <a href=\"http://localhost:8080/the-voting-game\">Register</a> and join game ID: " + g_id + ".\n\nThanks!\nThe Voting Game Team";
+        String inviteBody = "Hello there!" + "\n\nYou have been invited to play The Voting Game by " + g_creator + "." + "\n\nIf you would like to play, just <a href=\"http://localhost:8080/the-voting-game\">Login/Register</a> and join game ID: " + g_id + ".\n\nThanks!\nThe Voting Game Team";
 
         Properties properties = new Properties();
         properties.put("mail.smtp.host", "smtp.gmail.com");
@@ -59,7 +59,7 @@ public class SendEmailInviteServlet extends HttpServlet {
             message.setFrom(new InternetAddress("URStem2015@gmail.com"));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
             message.setSubject(inviteSubject);
-            message.setText(inviteBody);
+            message.setContent(inviteBody, "text/html");
             Transport.send(message);
 
             System.out.println("Player has been invited to join your game");

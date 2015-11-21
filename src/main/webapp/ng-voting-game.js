@@ -86,15 +86,9 @@ gameApp.controller('GameController', function($scope, $http) {
         window.location = "/the-voting-game/invite.html";
     }
 
-    $scope.getNewGame = function() {
-                $http.get("/the-voting-game/gamecreator?action=getnewgame")
-                    .then(function(resp) {
-                        $scope.newgame = resp.data;
-                    });
-                setTimeout($scope.newgame, 2000);
-    }
-
-    $scope.getGameid = function() {
+    $scope.selectPlayer = function(selectedE_mail) {
+        console.log(selectedE_mail);
+        //$scope.getGameid();
         $http.post("/the-voting-game/gamecreator", {}, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -108,12 +102,26 @@ gameApp.controller('GameController', function($scope, $http) {
             var json = resp.data;
             console.log(json.result)
             if (json.result == "idretrieved") {
-                $scope.g = resp.data;
+                $scope.g_id = json.g_id;
+                $scope.g_creator = $scope.u_name;
+                $scope.is_started = json.is_started;
+                $scope.p_joined = json.p_joined;
+                console.log("the retrieved id is: " + $scope.g_id);
+                console.log("the retrieved creator is: " + $scope.g_creator);
+                console.log("the retrieved status is: " + $scope.is_started);
+                console.log("the retrieved players joined is: " + $scope.p_joined);
+                if ($scope.g_id >= 1) {
+                            if (selectedE_mail != $scope.e_mail) {
+                                $scope.invitePlayer($scope.g_id, $scope.f_name, selectedE_mail);
+                            }
+                        } else {
+                            console.log("Game id is invalid");
+                        }
             }
-            window.location = "/the-voting-game/invite.html";
         });
     }
 
+    // currently not used 11/20/15
     function createGame(g_id, g_creator) {
             $http.post("/the-voting-game/gamecreator", {}, {
                 headers: {
@@ -138,23 +146,16 @@ gameApp.controller('GameController', function($scope, $http) {
             });
         }
 
-    $scope.selectPlayer = function(selectedE_mail) {
-        console.log(selectedE_mail);
-        if (selectedE_mail != $scope.e_mail) {
-                    $scope.invitePlayer(6, $scope.g_creator, $scope.e_mail);
-       }
-   }
-
-   $scope.invitePlayer = function(g_id, g_creator, e_mail) {
+    $scope.invitePlayer = function(g_id, g_creator, e_mail) {
         $http.post("/the-voting-game/invite", {}, {
-              headers: {
-                  'Content-Type': 'application/x-www-form-urlencoded'
-              },
-              params: {
-                  "g_id": g_id,
-                  "g_creator": g_creator,
-                  "e_mail": e_mail
-              }
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params: {
+              "g_id": g_id,
+              "g_creator": g_creator,
+              "e_mail": e_mail
+            }
         })
             .then(function(resp) {
                 // stay where you are

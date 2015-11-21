@@ -62,8 +62,8 @@ public class CreateGameServlet extends HttpServlet {
 			System.out.println("creategameid was called");
 			HttpSession session = req.getSession();
 			String g_creator = req.getParameter("g_creator").toLowerCase();
+
 			int g_id = grepo.newGameid(g_creator);
-			//grepo.newGameid(g_creator);
 			ImmutableMap<String, String> responseMap = ImmutableMap.<String, String>builder()
 					.put("result", "idcreated")
 					.put("g_id", Integer.toString(g_id))
@@ -74,29 +74,40 @@ public class CreateGameServlet extends HttpServlet {
 			resp.setContentType("application/json");
 			resp.getWriter().write(json);
 			resp.flushBuffer();
-			System.out.println("The Game ID is: " + g_id);
+
+			System.out.println("The created Game ID is: " + g_id);
 			session.setAttribute("g_id", g_id);
 			session.setAttribute("g_creator", g_creator);
+
 		} else if (action.equals("getgameid")) {
+			System.out.println("getgameid servlet was called");
 			HttpSession session = req.getSession();
 			String g_creator = (String) session.getAttribute("g_creator");
+
 			Game g = grepo.getGameid(g_creator);
 			ImmutableMap<String, String> responseMap = ImmutableMap.<String, String>builder()
 					.put("result", "idretrieved")
+					.put("g_id", Integer.toString(g.getG_id()))
+					.put("is_started", Boolean.toString(g.getIs_started()))
+					.put("p_joined", Integer.toString(g.getP_joined()))
 					.build();
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			String json = gson.toJson(responseMap);
 			resp.setContentType("application/json");
 			resp.getWriter().write(json);
 			resp.flushBuffer();
+
+			System.out.println("The servlet-retrieved Game ID is: " + g.getG_id());
 			session.setAttribute("g_id", g.getG_id());
 			session.setAttribute("g_creator", g.getG_creator());
 			session.setAttribute("is_started", g.getIs_started());
 			session.setAttribute("p_joined", g.getP_joined());
+
 		} else if (action.equals("creategame")) {
 			HttpSession session = req.getSession();
 			Integer g_id = (Integer) session.getAttribute("g_id");
 			String g_creator = (String) session.getAttribute("g_creator");
+
 			Game g = grepo.newGame(g_id, g_creator);
 			ImmutableMap<String, String> responseMap = ImmutableMap.<String, String>builder()
 					.put("result", "gamecreated")
@@ -106,11 +117,10 @@ public class CreateGameServlet extends HttpServlet {
 			resp.setContentType("application/json");
 			resp.getWriter().write(json);
 			resp.flushBuffer();
+
 			session.setAttribute("g_id", g.getG_id());
 			session.setAttribute("g_creator", g.getG_creator());
 			session.setAttribute("p_joined", g.getP_joined());
-		} else if (action.equals("inviteplayer")) {
-
 		}
 	}
 }
