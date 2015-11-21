@@ -54,8 +54,6 @@ public class CreateGameServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//HttpSession session = req.getSession();
-		//GameRepository grepo = (GameRepository) getServletContext().getAttribute(MysqlContextListener.GAME_REPOSITORY_KEY);
-		//PlayerRepository prepo = (PlayerRepository) getServletContext().getAttribute(MysqlContextListener.PLAYER_REPOSITORY_KEY);
 		String action = req.getParameter("action");
 
 		if (action.equals("creategameid")) {
@@ -121,6 +119,18 @@ public class CreateGameServlet extends HttpServlet {
 			session.setAttribute("g_id", g.getG_id());
 			session.setAttribute("g_creator", g.getG_creator());
 			session.setAttribute("p_joined", g.getP_joined());
+
+		// called by ng-voting-game getCurrentGames() function
+		} else if (action.equals("getcurrentgames")) {
+			System.out.println("getCurrentGames servlet was called");
+			// calls GameRepository getCurrentGames method
+			List<Game> currentGames = grepo.getCurrentGames();
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			String json = gson.toJson(currentGames);
+
+			resp.setContentType("application/json");
+			resp.getWriter().write(json);
+			resp.flushBuffer();
 		}
 	}
 }

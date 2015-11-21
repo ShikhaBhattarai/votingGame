@@ -43,6 +43,7 @@ public class PlayerServlet extends HttpServlet {
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			String json = gson.toJson(players);
 
+			System.out.println("g_id: " + players.g_id + " g_creator: " + g_creator + " e_mail: " + e_mail);
 			resp.setContentType("application/json");
 			resp.getWriter().write(json);
 			resp.flushBuffer();

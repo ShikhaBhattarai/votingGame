@@ -16,6 +16,7 @@ public class Game {
     //LocalDateTime  lastchattime;
     boolean is_started;
     int p_joined;
+    String g_winner;
 
     public Game() {
         this.g_id = 0;
@@ -24,6 +25,7 @@ public class Game {
         //this.u_name = "";
         this.is_started = false;
         this.p_joined = 0;
+        this.g_winner = "";
     }
 
     public Game(String g_creator) {
@@ -41,16 +43,15 @@ public class Game {
         this.g_creator = g_creator;
         this.is_started = is_started;
         this.p_joined = p_joined;
-        //this.u_name = u_name;
     }
 
-    /*public Player(String e_mail, String f_name,String l_name, String u_name, Integer g_won) {
-        this.e_mail = e_mail;
-        this.f_name = f_name;
-        this.l_name = l_name;
-        this.u_name = u_name;
-        this.g_won = g_won;
-    }*/
+    public Game(Integer g_id, String g_creator, Boolean is_started, Integer p_joined, String g_winner) {
+        this.g_id = g_id;
+        this.g_creator = g_creator;
+        this.is_started = is_started;
+        this.p_joined = p_joined;
+        this.g_winner = g_winner;
+    }
 
     public int getG_id() {
         return g_id;

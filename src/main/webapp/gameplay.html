@@ -76,17 +76,16 @@
 
 		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
 			<div class="mdl-layout__drawer mdl-color--indigo mdl-color-text--grey-700">
-				<span class="mdl-layout-title mdl-color-text--black">Players</span>
-				<div ng-init="getPlayers();">
-					<div ng-show="players.length == 0" style="padding:20px">
-						There are no players <i class="material-icons">mood_bad</i>
+				<span class="mdl-layout-title mdl-color-text--black">Current Game</span>
+				<div ng-init="getCurrentGames();">
+					<div ng-show="currentgames.length == 0" style="padding:20px">
+						There are no current games <i class="material-icons">mood_bad</i>
 					</div>
-					<div ng-show="players.length > 0">
-						<div ng-repeat="player in players" style="padding:0px 34px">
-                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" ng-click="getInvitedPlayer();" ng-hide="player.u_name == u_name"/>
-                            {{player.u_name}}
+					<div ng-show="currentgames.length > 0">
+						<div ng-repeat="game in currentgames" style="padding:0px 34px">
+                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" ng-click="joinGame();" ng-hide="player.u_name == u_name"/>
+                            Game {{currentgames.g_id}}
                             </button>
-                            <span class="mdl-badge mdl-badge--overlap" data-badge="" ng-show="checkUnreadList(player.u_name, myUnreadUserList);"></span>
                         </div>
 					</div>
 				</div>

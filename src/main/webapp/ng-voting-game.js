@@ -31,9 +31,6 @@ gameApp.controller('GameController', function($scope, $http) {
         $http.get("/the-voting-game/players?action=findall")
             .then(function(resp) {
                 $scope.players = resp.data;
-                /*if (typeof $scope.otherPlayer == 'undefined') {
-                    $scope.selectedPlayer($scope.players);
-                }*/
             });
         setTimeout($scope.getPlayers, 2000);
     }
@@ -121,31 +118,6 @@ gameApp.controller('GameController', function($scope, $http) {
         });
     }
 
-    // currently not used 11/20/15
-    function createGame(g_id, g_creator) {
-            $http.post("/the-voting-game/gamecreator", {}, {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                params: {
-                    "action": "creategame",
-                    "g_id": g_id,
-                    "g_creator": g_creator
-                }
-            })
-            .then(function(resp) {
-                var json = resp.data;
-                $scope.g_id = json.g_id;
-                $scope.g_creator = json.g_creator;
-                //$scope.p_joined = json.p_joined;
-                //console.log(json.result)
-                //if (json.result == "gamecreated") {
-                    // is there anything to do?
-                    window.location = "/the-voting-game/invite.html";
-                //}
-            });
-        }
-
     $scope.invitePlayer = function(g_id, g_creator, e_mail) {
         $http.post("/the-voting-game/invite", {}, {
             headers: {
@@ -157,13 +129,25 @@ gameApp.controller('GameController', function($scope, $http) {
               "e_mail": e_mail
             }
         })
+        .then(function(resp) {
+            // stay where you are
+        });
+    }
+
+    $scope.getCurrentGames = function() {
+        $http.get("/the-voting-game/gamecreator?action=getcurrentgames")
             .then(function(resp) {
-                // stay where you are
+                $scope.currentgames = resp.data;
             });
-        }
+        setTimeout($scope.getCurrentGames, 2000);
+    }
 
     $scope.registerToSocket = function(u_name) {
         sendMessage("register=" + u_name);
+    }
+
+    $scope.join = function() {
+        window.location = "/the-voting-game/gameplay.html";
     }
 
     function displayData(data) {
