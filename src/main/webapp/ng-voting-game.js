@@ -100,8 +100,8 @@ gameApp.controller('GameController', function($scope, $http) {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             params: {
-                "action": "getgameid"
-                "g_creator": $scope.u_name;
+                "action": "getgameid",
+                "g_creator": $scope.u_name
             }
         })
         .then(function(resp) {
