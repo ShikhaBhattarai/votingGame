@@ -76,17 +76,37 @@
 
 		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
 			<div class="mdl-layout__drawer mdl-color--indigo mdl-color-text--grey-700">
-				<span class="mdl-layout-title mdl-color-text--black">Current Game</span>
+				<span class="mdl-layout-title mdl-color-text--black">Current Games</span>
 				<div ng-init="getCurrentGames();">
 					<div ng-show="currentgames.length == 0" style="padding:20px">
 						There are no current games <i class="material-icons">mood_bad</i>
 					</div>
 					<div ng-show="currentgames.length > 0">
 						<div ng-repeat="game in currentgames" style="padding:0px 34px">
-                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" ng-click="joinGame();" ng-hide="player.u_name == u_name"/>
-                            Game {{currentgames.g_id}}
+
+							<!-- We need a status to display next to the game ID, when it displays join and is clicked, it should -->
+							<!-- add 1 to p_joined and change to start once p_joined = 5 -->
+
+                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" ng-click="joinGame();"/>
+                            Game {{game.g_id}}
                             </button>
                         </div>
+					</div>
+				</div>
+				<span class="mdl-layout-title mdl-color-text--black">Previous Games</span>
+				<div ng-init="getPreviousGames();">
+					<div ng-show="previosgames.length == 0" style="padding:20px">
+						There are no previous games <i class="material-icons">mood_bad</i>
+					</div>
+					<div ng-show="previousgames.length > 0">
+						<div ng-repeat="game in previousgames" style="padding:0px 34px">
+
+							<!-- When this button is clicked, it should display the completed game's stats -->
+
+							<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" ng-click="getGameStats();"/>
+							Game {{game.g_id}}
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>

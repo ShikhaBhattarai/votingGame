@@ -10,10 +10,6 @@ package edu.nku.csc456.votingGame.web.model;
 public class Game {
     int g_id;
     String g_creator;
-    //String l_name;
-    //String u_name;
-    //String lastchatwith;
-    //LocalDateTime  lastchattime;
     boolean is_started;
     int p_joined;
     String g_winner;
@@ -21,8 +17,6 @@ public class Game {
     public Game() {
         this.g_id = 0;
         this.g_creator = "";
-        //this.l_name = "";
-        //this.u_name = "";
         this.is_started = false;
         this.p_joined = 0;
         this.g_winner = "";
@@ -69,25 +63,9 @@ public class Game {
         return p_joined;
     }
 
-    /*public String getL_name() {
-        return l_name;
+    public String getG_winner() {
+        return g_winner;
     }
-
-    public String getU_name() {
-        return u_name;
-    }
-
-    public boolean isOnline() {
-        return online;
-    }
-
-    public LocalDateTime getLastchattime() {
-        return lastchattime;
-    }
-
-    public String getLastchatwith() {
-        return lastchatwith;
-    }*/
 
     public void setG_id(int g_id) {
         this.g_id = g_id;
@@ -105,23 +83,7 @@ public class Game {
         this.p_joined = p_joined;
     }
 
-    /*public void setL_name(String l_name) {
-        this.l_name = l_name;
+    public void setG_winner(String g_winner) {
+        this.g_winner = g_winner;
     }
-
-    public void setU_name(String u_name) {
-        this.u_name = u_name;
-    }
-
-    public void setOnline(boolean online) {
-        this.online = online;
-    }
-
-    public void setLastchattime(LocalDateTime lastchattime) {
-        this.lastchattime = lastchattime;
-    }
-
-    public void setLastChatWith(String lastchatwith) {
-        this.lastchatwith = lastchatwith;
-    }*/
 }

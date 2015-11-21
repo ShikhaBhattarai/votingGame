@@ -138,8 +138,24 @@ gameApp.controller('GameController', function($scope, $http) {
         $http.get("/the-voting-game/gamecreator?action=getcurrentgames")
             .then(function(resp) {
                 $scope.currentgames = resp.data;
+                for (c in $scope.currentgames) {
+                    var c_g_id = $scope.currentgames[c].g_id;
+                    console.log("This Game ID is: " + c_g_id);
+                }
             });
         setTimeout($scope.getCurrentGames, 2000);
+    }
+
+    $scope.getPreviousGames = function() {
+        $http.get("/the-voting-game/gamecreator?action=getpreviousgames")
+            .then(function(resp) {
+                $scope.previousgames = resp.data;
+                for (p in $scope.previousgames) {
+                    var p_g_id = $scope.previousgames[p].g_id;
+                    console.log("This Game ID is: " + p_g_id);
+                }
+            });
+        setTimeout($scope.getPreviousGames, 2000);
     }
 
     $scope.registerToSocket = function(u_name) {

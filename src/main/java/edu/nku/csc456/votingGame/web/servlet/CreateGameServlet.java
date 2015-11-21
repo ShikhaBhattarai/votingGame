@@ -37,28 +37,15 @@ public class CreateGameServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		this.doPost(req, resp);
-		String action = req.getParameter("action");
-		String g_creator = req.getParameter("g_creator");
-		if (action.equals("getnewgame")) {
-				// calls GameRepository getGames method
-				List<Game> newgame = grepo.newGameList(g_creator);
-				Gson gson = new GsonBuilder().setPrettyPrinting().create();
-				String json = gson.toJson(newgame);
-
-				resp.setContentType("application/json");
-				resp.getWriter().write(json);
-				resp.flushBuffer();
-			}
-		}
+	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//HttpSession session = req.getSession();
+		HttpSession session = req.getSession();
 		String action = req.getParameter("action");
 
 		if (action.equals("creategameid")) {
 			System.out.println("creategameid was called");
-			HttpSession session = req.getSession();
 			String g_creator = req.getParameter("g_creator").toLowerCase();
 
 			int g_id = grepo.newGameid(g_creator);
@@ -79,7 +66,6 @@ public class CreateGameServlet extends HttpServlet {
 
 		} else if (action.equals("getgameid")) {
 			System.out.println("getgameid servlet was called");
-			HttpSession session = req.getSession();
 			String g_creator = (String) session.getAttribute("g_creator");
 
 			Game g = grepo.getGameid(g_creator);
@@ -88,6 +74,7 @@ public class CreateGameServlet extends HttpServlet {
 					.put("g_id", Integer.toString(g.getG_id()))
 					.put("is_started", Boolean.toString(g.getIs_started()))
 					.put("p_joined", Integer.toString(g.getP_joined()))
+					.put("g_winner", g.getG_winner())
 					.build();
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			String json = gson.toJson(responseMap);
@@ -100,33 +87,24 @@ public class CreateGameServlet extends HttpServlet {
 			session.setAttribute("g_creator", g.getG_creator());
 			session.setAttribute("is_started", g.getIs_started());
 			session.setAttribute("p_joined", g.getP_joined());
+			session.setAttribute("g_winner", g.getG_winner());
 
-		} else if (action.equals("creategame")) {
-			HttpSession session = req.getSession();
-			Integer g_id = (Integer) session.getAttribute("g_id");
-			String g_creator = (String) session.getAttribute("g_creator");
-
-			Game g = grepo.newGame(g_id, g_creator);
-			ImmutableMap<String, String> responseMap = ImmutableMap.<String, String>builder()
-					.put("result", "gamecreated")
-					.build();
-			Gson gson = new GsonBuilder().setPrettyPrinting().create();
-			String json = gson.toJson(responseMap);
-			resp.setContentType("application/json");
-			resp.getWriter().write(json);
-			resp.flushBuffer();
-
-			session.setAttribute("g_id", g.getG_id());
-			session.setAttribute("g_creator", g.getG_creator());
-			session.setAttribute("p_joined", g.getP_joined());
-
-		// called by ng-voting-game getCurrentGames() function
 		} else if (action.equals("getcurrentgames")) {
 			System.out.println("getCurrentGames servlet was called");
 			// calls GameRepository getCurrentGames method
-			List<Game> currentGames = grepo.getCurrentGames();
+			List<Game> currentgames = grepo.getCurrentGames();
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
-			String json = gson.toJson(currentGames);
+			String json = gson.toJson(currentgames);
+
+			resp.setContentType("application/json");
+			resp.getWriter().write(json);
+			resp.flushBuffer();
+		} else if (action.equals("getpreviousgames")) {
+			System.out.println("getPreviousGames servlet was called");
+			// calls GameRepository getPreviousGames method
+			List<Game> previousgames = grepo.getPreviousGames();
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			String json = gson.toJson(previousgames);
 
 			resp.setContentType("application/json");
 			resp.getWriter().write(json);

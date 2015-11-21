@@ -24,6 +24,7 @@ public class GameRepository {
     private static final String CREATE_GAME_SQL = "INSERT INTO games (g_id, g_creator, p_joined) VALUES (?, ?, 1)";
     private static final String UPDATE_P_JOINED_SQL = "UPDATE gameids SET p_joined = p_joined + 1 WHERE g_id = ?";
     private static final String SELECT_CURRENT_SQL = "SELECT * FROM gameids WHERE g_winner='empty';";
+    private static final String SELECT_PREVIOUS_SQL = "SELECT * FROM gameids WHERE g_winner!='empty';";
 
     public GameRepository(Connection connection) {
         this.connection = connection;
@@ -55,7 +56,7 @@ public class GameRepository {
             statement.execute();
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Game g = new Game(resultSet.getInt("g_id"), resultSet.getString("g_creator"), resultSet.getBoolean("is_started"), resultSet.getInt("p_joined"));
+                Game g = new Game(resultSet.getInt("g_id"), resultSet.getString("g_creator"), resultSet.getBoolean("is_started"), resultSet.getInt("p_joined"), resultSet.getString("g_winner"));
                 return g;
             }
         } catch (SQLException e) {
@@ -65,56 +66,39 @@ public class GameRepository {
         return g;
     }
 
-    public Game newGame(Integer g_id, String g_creator) {
-        try (PreparedStatement statement = connection.prepareStatement(CREATE_GAME_SQL)) {
-            statement.setInt(1, g_id);
-            statement.setString(2, g_creator);
-            statement.execute();
-            ResultSet resultSet = statement.getResultSet();
-            while (resultSet.next()) {
-                Game g = new Game(resultSet.getInt("g_id"), resultSet.getString("g_creator"), resultSet.getInt("p_joined"));
-                return g;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        Game g = new Game();
-        return g;
-    }
-
-    public List<Game> newGameList(String g_creator) {
-        try (PreparedStatement statement = connection.prepareStatement(SELECT_GAMEID_SQL)) {
-            statement.setString(1, g_creator);
-            statement.execute();
-            ResultSet resultSet = statement.getResultSet();
-            List<Game> newgame = new ArrayList<>();
-            while (resultSet.next()) {
-                Game g = new Game(resultSet.getInt("g_id"), resultSet.getString("g_creator"), resultSet.getBoolean("is_started"), resultSet.getInt("p_joined"));
-                newgame.add(g);
-            }
-            return newgame;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Collections.emptyList();
-    }
-
-    // coding in progress
     public List<Game> getCurrentGames() {
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(SELECT_CURRENT_SQL);
-            List<Game> currentGameList = new ArrayList<>();
+            List<Game> currentgames = new ArrayList<>();
             while (resultSet.next()) {
                 Game g = new Game(resultSet.getInt("g_id"), resultSet.getString("g_creator"), resultSet.getBoolean("is_started"), resultSet.getInt("p_joined"), resultSet.getString("g_winner"));
-                currentGameList.add(g);
+                currentgames.add(g);
+                System.out.println("This Game is: " + g);
             }
-            return currentGameList;
+            return currentgames;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return Collections.emptyList();
     }
 
+    public List<Game> getPreviousGames() {
+        try (Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(SELECT_PREVIOUS_SQL);
+            List<Game> previousgames = new ArrayList<>();
+            while (resultSet.next()) {
+                Game g = new Game(resultSet.getInt("g_id"), resultSet.getString("g_creator"), resultSet.getBoolean("is_started"), resultSet.getInt("p_joined"), resultSet.getString("g_winner"));
+                previousgames.add(g);
+                System.out.println("This Game is: " + g);
+            }
+            return previousgames;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Collections.emptyList();
+    }
+
+    // this is not being called yet, just thinking ahead
     public void updateP_joined(Integer g_id) {
         try (PreparedStatement statement = connection.prepareStatement(UPDATE_P_JOINED_SQL)) {
             statement.setInt(1, g_id);
@@ -207,5 +191,39 @@ public class GameRepository {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}*/
+	}
+
+    public Game newGame(Integer g_id, String g_creator) {
+        try (PreparedStatement statement = connection.prepareStatement(CREATE_GAME_SQL)) {
+            statement.setInt(1, g_id);
+            statement.setString(2, g_creator);
+            statement.execute();
+            ResultSet resultSet = statement.getResultSet();
+            while (resultSet.next()) {
+                Game g = new Game(resultSet.getInt("g_id"), resultSet.getString("g_creator"), resultSet.getInt("p_joined"));
+                return g;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        Game g = new Game();
+        return g;
+    }
+
+    public List<Game> newGameList(String g_creator) {
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_GAMEID_SQL)) {
+            statement.setString(1, g_creator);
+            statement.execute();
+            ResultSet resultSet = statement.getResultSet();
+            List<Game> newgame = new ArrayList<>();
+            while (resultSet.next()) {
+                Game g = new Game(resultSet.getInt("g_id"), resultSet.getString("g_creator"), resultSet.getBoolean("is_started"), resultSet.getInt("p_joined"));
+                newgame.add(g);
+            }
+            return newgame;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Collections.emptyList();
+    }*/
 }

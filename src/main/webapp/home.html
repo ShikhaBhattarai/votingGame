@@ -58,7 +58,7 @@
 				<div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
 					<a href="home.html" class="mdl-layout__tab is-active">Overview</a>
 					<a href="invite.html" class="mdl-layout__tab" ng-click="createGameid();">Create</a>
-					<a href="#join" class="mdl-layout__tab">Join</a>
+					<a href="#join" class="mdl-layout__tab" ng-click="join();">Join</a>
 					<a href="#start" class="mdl-layout__tab">Start</a>
 					<a href="#leaderboard" class="mdl-layout__tab">Leaderboard</a>
 					<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="bulkupload" ng-click="bulkUpload();" value="Bulk Card Upload">
@@ -123,7 +123,7 @@
 						</div>
 					</div>
 					<div class="mdl-card__actions">
-						<!-- still need to code join() and start() functions -->
+						<!-- still need to code start() functions -->
 						<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-hide="showStart" ng-click="createGameid();" ng-disabled="createSection.game_id.$invalid">Create Game</button>
 						<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-hide="showStart" ng-click="join();">Join Game</button>
 						<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="start();" ng-show="showStart" ng-disabled="createSection.game_id.$invalid">Start Game</button>
