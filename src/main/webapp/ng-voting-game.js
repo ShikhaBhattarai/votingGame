@@ -77,10 +77,10 @@ gameApp.controller('GameController', function($scope, $http) {
         })
         .then(function(resp) {
             var json = resp.data;
-            console.log(json.result)
+            console.log(json.result);
             if (json.result == "idcreated") {
                 $scope.g_id = json.g_id;
-                $scope.g_creator = json.g_creator;
+                $scope.g_creator = $scope.u_name;
             }
         });
         window.location = "/the-voting-game/invite.html";
@@ -101,6 +101,7 @@ gameApp.controller('GameController', function($scope, $http) {
             },
             params: {
                 "action": "getgameid"
+                "g_creator": $scope.u_name;
             }
         })
         .then(function(resp) {
@@ -137,35 +138,28 @@ gameApp.controller('GameController', function($scope, $http) {
             });
         }
 
-    $scope.selectPlayer = function(selectedU_name, players) {
-        if (connection && selectedU_name != $scope.u_name && $scope.g_id && selectedU_name != null) {
-            for (var p in players) {
-                if (players[p].u_name == selectedU_name) {
-                    $scope.e_mail = players[p].e_mail;
-                    $scope.f_name = players[p].f_name;
-                    $scope.l_name = players[p].l_name;
-                    $scope.p_u_name = players[p].u_name;
-                    //$scope.u_name = data.u_name;
-                    //$scope.g_won = data.g_won;
-                    //$scope.getPlayers();
-                    //$scope.populateUnreadList();
-                    $scope.invitePlayer($scope.u_name, $scope.g_id, $scope.e_mail, $scope.f_name, $scope.l_name, $scope.p_u_name);
-                }
-            }
-            //invitePlayer($scope.f_name, selectedU_name);
+    $scope.selectPlayer = function(selectedE_mail) {
+        console.log(selectedE_mail);
+        if (selectedE_mail != $scope.e_mail) {
+                    $scope.invitePlayer(6, $scope.g_creator, $scope.e_mail);
        }
    }
 
-   $scope.invitePlayer = function() {
-        $http.get("/the-voting-game/invite?action=inviteplayer")
+   $scope.invitePlayer = function(g_id, g_creator, e_mail) {
+        $http.post("/the-voting-game/invite", {}, {
+              headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+              },
+              params: {
+                  "g_id": g_id,
+                  "g_creator": g_creator,
+                  "e_mail": e_mail
+              }
+        })
             .then(function(resp) {
-                $scope.players = resp.data;
-                if (typeof $scope.otherPlayer == 'undefined') {
-                    $scope.selectedPlayer($scope.players);
-                }
+                // stay where you are
             });
-        setTimeout($scope.getPlayers, 2000);
-   }
+        }
 
     $scope.registerToSocket = function(u_name) {
         sendMessage("register=" + u_name);

@@ -8,38 +8,39 @@ package edu.nku.csc456.votingGame.web.model;
  */
 
 public class Game {
-    Integer g_id;
+    int g_id;
     String g_creator;
     //String l_name;
     //String u_name;
-    //Integer g_won;
     //String lastchatwith;
     //LocalDateTime  lastchattime;
-    boolean isStarted;
+    boolean is_started;
+    int p_joined;
 
     public Game() {
-        this.g_id = null;
+        this.g_id = 0;
         this.g_creator = "";
         //this.l_name = "";
         //this.u_name = "";
-        //this.g_won = 0;
-        this.isStarted = false;
+        this.is_started = false;
+        this.p_joined = 0;
     }
 
-    public Game(Integer g_id) {
-        this.g_id = g_id;
+    public Game(String g_creator) {
+        this.g_creator = g_creator;
     }
 
-    public Game(Integer g_id,String g_creator) {
+    public Game(Integer g_id, String g_creator, Integer p_joined) {
         this.g_id = g_id;
         this.g_creator = g_creator;
-        //this.g_won = g_won;
+        this.p_joined = p_joined;
     }
 
-    public Game(Integer g_id, String g_creator, Boolean isStarted) {
+    public Game(Integer g_id, String g_creator, Boolean is_started, Integer p_joined) {
         this.g_id = g_id;
         this.g_creator = g_creator;
-        this.isStarted = isStarted;
+        this.is_started = is_started;
+        this.p_joined = p_joined;
         //this.u_name = u_name;
     }
 
@@ -51,7 +52,7 @@ public class Game {
         this.g_won = g_won;
     }*/
 
-    public Integer getG_id() {
+    public int getG_id() {
         return g_id;
     }
 
@@ -59,8 +60,12 @@ public class Game {
         return g_creator;
     }
 
-    public boolean isStarted() {
-        return isStarted;
+    public boolean getIs_started() {
+        return is_started;
+    }
+
+    public int getP_joined() {
+        return p_joined;
     }
 
     /*public String getL_name() {
@@ -69,10 +74,6 @@ public class Game {
 
     public String getU_name() {
         return u_name;
-    }
-
-    public Integer getG_won() {
-        return g_won;
     }
 
     public boolean isOnline() {
@@ -87,7 +88,7 @@ public class Game {
         return lastchatwith;
     }*/
 
-    public void setG_id(Integer g_id) {
+    public void setG_id(int g_id) {
         this.g_id = g_id;
     }
 
@@ -95,8 +96,12 @@ public class Game {
         this.g_creator = g_creator;
     }
 
-    public void setStarted(boolean isStarted) {
-        this.isStarted = isStarted;
+    public void setIs_started(boolean is_started) {
+        this.is_started = is_started;
+    }
+
+    public void setP_joined(int p_joined) {
+        this.p_joined = p_joined;
     }
 
     /*public void setL_name(String l_name) {
@@ -105,10 +110,6 @@ public class Game {
 
     public void setU_name(String u_name) {
         this.u_name = u_name;
-    }
-
-    public void setG_won(Integer g_won) {
-        this.g_won = g_won;
     }
 
     public void setOnline(boolean online) {

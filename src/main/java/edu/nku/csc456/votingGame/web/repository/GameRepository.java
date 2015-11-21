@@ -4,11 +4,14 @@
 package edu.nku.csc456.votingGame.web.repository;
 
 import edu.nku.csc456.votingGame.web.model.Game;
+import edu.nku.csc456.votingGame.web.model.Player;
 
+import java.lang.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * Created by Angel on 11/8/15.
@@ -16,34 +19,128 @@ import java.util.List;
 
 public class GameRepository {
     private Connection connection;
-    private static final String CREATE_GAME_SQL = "INSERT INTO games (g_creator) VALUES (?)";
+    private static final String CREATE_GAMEID_SQL = "INSERT INTO gameids (g_creator, is_started, p_joined) VALUES (?, ?, ?)";
+    //private static final String CREATE_GAMEID_SQL = "INSERT INTO gameids (is_started) VALUES (?)";
+    //private static final String INSERT_INTO_GAME_SQL = "INSERT INTO games VALUES (?, ?, 0, 0, ?, ?)";
+    private static final String SELECT_GAMEID_SQL = "SELECT * FROM gameids WHERE g_creator = ? ORDER BY g_id DESC LIMIT 1;";
+    private static final String CREATE_GAME_SQL = "INSERT INTO games (g_id, g_creator, p_joined) VALUES (?, ?, 1)";
+    private static final String GAME_SQL = "SELECT * FROM gameids ORDER BY g_id;";
+    private static final String UPDATE_P_JOINED_SQL = "UPDATE gameids SET p_joined = p_joined + 1 WHERE g_id = ?";
+    //private static final String SELECT_LASTID_SQL = "SELECT LAST_INSERT_ID()";
     //private static final String SELECT_ALL_SQL = "SELECT * FROM players;";
-    private static final String SELECT_GAME_SQL = "SELECT g_id FROM games WHERE g_creator = ";
     //private static final String LEADER_SQL = "SELECT f_name, l_name, g_won FROM players ORDER BY g_won DESC;";
 
     public GameRepository(Connection connection) {
         this.connection = connection;
     }
 
-    public void newGame(String g_creator) {
-        try (PreparedStatement statement = connection.prepareStatement(CREATE_GAME_SQL)) {
-            statement.setString(1, g_creator.toLowerCase());
+    // newGameid() is being tested - Angel
+    public int newGameid(String g_creator) {
+        int g_id = 0;
+        try (PreparedStatement statement = connection.prepareStatement(CREATE_GAMEID_SQL, Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, g_creator);
+            statement.setBoolean(2, false);
+            statement.setInt(3, 1);
             statement.execute();
+            try (ResultSet resultSet = statement.getGeneratedKeys()) {
+                while (resultSet.next()) {
+                    g_id = resultSet.getInt(1);
+                    //Game g = new Game(resultSet.getInt("g_id"), resultSet.getString("g_creator"), resultSet.getBoolean("is_started"), resultSet.getInt("p_joined"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        /*try (PreparedStatement statement = connection.prepareStatement(SELECT_GAMEID_SQL, Statement.RETURN_GENERATED_KEYS)) {
+            //statement.setString(1, g_creator);
+            statement.execute();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if (resultSet.last()) {
+                g_id = resultSet.getInt(1);
+                //Game g = new Game(resultSet.getInt("g_id"), resultSet.getString("g_creator"), resultSet.getBoolean("is_started"), resultSet.getInt("p_joined"));
+                //return g;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
+        //Game g = new Game();
+        return g_id;
     }
 
-    public Game getGame(String g_creator) {
-        try (Statement statement = connection.createStatement()) {
-            statement.execute(SELECT_GAME_SQL + "'" + g_creator + "'");
-            ResultSet resultSet = statement.getResultSet();
-            Game g = new Game(resultSet.getInt("g_id"), resultSet.getString("g_creator"), resultSet.getBoolean("isStarted"));
+    /*public String addToGame(int g_id, String u_name, Boolean g_creator, int p_joined) {
+        try (PreparedStatement statement = connection.prepareStatement(INSERT_INTO_GAME_SQL)) {
+            statement.setInt(1, g_id);
+            statement.setString(2, u_name);
+            statement.setBoolean(3, g_creator);
+            statement.setInt(4, p_joined);
+            statement.execute();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return "User already in game.";
+        }
+        return null;
+    }*/
+
+    public Game getGameid(String g_creator) {
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_GAMEID_SQL)) {
+            statement.setString(1, g_creator);
+            statement.execute();
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Game g = new Game(resultSet.getInt("g_id"), resultSet.getString("g_creator"), resultSet.getBoolean("is_started"), resultSet.getInt("p_joined"));
+                return g;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         Game g = new Game();
         return g;
+    }
+
+    public Game newGame(Integer g_id, String g_creator) {
+        try (PreparedStatement statement = connection.prepareStatement(CREATE_GAME_SQL)) {
+            statement.setInt(1, g_id);
+            statement.setString(2, g_creator);
+            statement.execute();
+            ResultSet resultSet = statement.getResultSet();
+            while (resultSet.next()) {
+                Game g = new Game(resultSet.getInt("g_id"), resultSet.getString("g_creator"), resultSet.getInt("p_joined"));
+                return g;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        Game g = new Game();
+        return g;
+    }
+
+    public List<Game> newGameList(String g_creator) {
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_GAMEID_SQL)) {
+            statement.setString(1, g_creator);
+            statement.execute();
+            ResultSet resultSet = statement.getResultSet();
+            List<Game> newgame = new ArrayList<>();
+            while (resultSet.next()) {
+                Game g = new Game(resultSet.getInt("g_id"), resultSet.getString("g_creator"), resultSet.getBoolean("is_started"), resultSet.getInt("p_joined"));
+                newgame.add(g);
+            }
+            return newgame;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Collections.emptyList();
+    }
+
+    public void updateP_joined(Integer g_id) {
+        try (PreparedStatement statement = connection.prepareStatement(UPDATE_P_JOINED_SQL)) {
+            statement.setInt(1, g_id);
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /*public Player findPlayer(String u_name) {
@@ -93,16 +190,6 @@ public class GameRepository {
         }
         return Collections.emptyList();
     }
-
-	public void updateUserOnlineStatus(String username, boolean isonline) {
-		try (PreparedStatement statement = connection.prepareStatement(UPDATE_USER_ISONLINE_SQL)) {
-			statement.setString(1, username);
-			statement.setBoolean(2, isonline);
-			statement.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
 
 	public void updateUserLastChatTime(String username, LocalDateTime lastchattime ) {
 		Timestamp ts = Timestamp.valueOf(lastchattime);

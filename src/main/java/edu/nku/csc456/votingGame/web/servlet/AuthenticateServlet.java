@@ -35,11 +35,11 @@ public class AuthenticateServlet extends HttpServlet {
 			String f_name = req.getParameter("f_name");
 			String l_name = req.getParameter("l_name");
 			String u_name= req.getParameter("u_name").toLowerCase();
-			// calls UserRepository findUser() method
+			// calls PlayerRepository findPlayer() method
 			Player p = prepo.findPlayer(u_name);
-			// register a user that does not exist
+			// register a player that does not exist
 			if (p.getU_name().equals("")) {
-				// calls UserRepository saveUser() method
+				// calls PlayerRepository savePlayer() method
 				prepo.savePlayer(e_mail, f_name, l_name, u_name);
 				ImmutableMap<String,String> responseMap = ImmutableMap.<String, String>builder()
 						.put("result", "registerSuccess")
@@ -98,7 +98,7 @@ public class AuthenticateServlet extends HttpServlet {
 				resp.flushBuffer();
 			} else {
 				// user exists
-				// results to ng-chattycathy login() funtion
+				// results to ng-voting-game login() funtion
 				ImmutableMap<String,String> responseMap = ImmutableMap.<String, String>builder()
 						.put("result", "loginSuccess")
 						.build();
