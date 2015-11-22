@@ -109,6 +109,27 @@ public class CreateGameServlet extends HttpServlet {
 			resp.setContentType("application/json");
 			resp.getWriter().write(json);
 			resp.flushBuffer();
+		} else if (action.equals("joingame")) {
+			System.out.println("joinGame servlet was called");
+			// calls GameRepository joinGame() method
+
+			Integer g_id = Integer.parseInt(req.getParameter("g_id"));
+			//String p_u_name = req.getParameter("u_name");
+
+			grepo.joinGame(g_id);
+			ImmutableMap<String, String> responseMap = ImmutableMap.<String, String>builder()
+					.put("result", "p_joinedupdated")
+					.put("g_id", Integer.toString(g_id))
+					//.put("g_creator", g_creator)
+					.build();
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			String json = gson.toJson(responseMap);
+			resp.setContentType("application/json");
+			resp.getWriter().write(json);
+			resp.flushBuffer();
+
+			System.out.println("The joined Game ID is: " + g_id);
+			session.setAttribute("g_id", g_id);
 		}
 	}
 }

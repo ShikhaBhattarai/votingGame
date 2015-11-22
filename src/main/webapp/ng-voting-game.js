@@ -57,11 +57,9 @@ gameApp.controller('GameController', function($scope, $http) {
                 $scope.u_name = data.u_name;
                 $scope.g_won = data.g_won;
                 $scope.getPlayers();
-                //$scope.getGameid();
             });
     }
 
-    // createGameid is functional - Angel
     $scope.createGameid = function() {
         $http.post("/the-voting-game/gamecreator", {}, {
             headers: {
@@ -85,7 +83,6 @@ gameApp.controller('GameController', function($scope, $http) {
 
     $scope.selectPlayer = function(selectedE_mail) {
         console.log(selectedE_mail);
-        //$scope.getGameid();
         $http.post("/the-voting-game/gamecreator", {}, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -164,6 +161,27 @@ gameApp.controller('GameController', function($scope, $http) {
 
     $scope.join = function() {
         window.location = "/the-voting-game/gameplay.html";
+    }
+
+    $scope.joinGame = function(g_id) {
+        console.log("The player should join Game ID: " + g_id);
+        $http.post("/the-voting-game/gamecreator", {}, {
+            headers: {
+                'ContentType': 'application/x-www-form-urlencoded'
+            },
+            params: {
+                "action": "joingame",
+                "g_id": g_id
+            }
+        })
+        .then(function(resp) {
+            if ($scope.p_joined >= 5) {
+                console.log($scope.p_joined + " players have joined. Game play can begin!");
+                // display start button
+            } else {
+                // is there an else?
+            }
+        })
     }
 
     function displayData(data) {

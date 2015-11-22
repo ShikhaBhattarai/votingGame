@@ -98,8 +98,7 @@ public class GameRepository {
         return Collections.emptyList();
     }
 
-    // this is not being called yet, just thinking ahead
-    public void updateP_joined(Integer g_id) {
+    public void joinGame(Integer g_id) {
         try (PreparedStatement statement = connection.prepareStatement(UPDATE_P_JOINED_SQL)) {
             statement.setInt(1, g_id);
             statement.execute();
