@@ -175,6 +175,46 @@ gameApp.controller('GameController', function($scope, $http) {
         setTimeout($scope.getCurrentGames, 2000);
     }
 
+    $scope.getStartGames = function() {
+        $http.post("/the-voting-game/gamecreator", {}, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params: {
+                "action": "getstartgames",
+                "p_u_name": $scope.u_name
+            }
+        })
+        .then(function(resp) {
+            $scope.startgames = resp.data;
+            for (s in $scope.startgames) {
+                var s_g_id = $scope.startgames[s].g_id;
+                console.log("This Game ID is: " + s_g_id);
+            }
+        });
+        setTimeout($scope.getStartGames, 2000);
+    }
+
+    $scope.getJoinGames = function() {
+        $http.post("/the-voting-game/gamecreator", {}, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params: {
+                "action": "getjoingames",
+                "p_u_name": $scope.u_name
+            }
+        })
+        .then(function(resp) {
+            $scope.joingames = resp.data;
+            for (j in $scope.joingames) {
+                var j_g_id = $scope.joingames[j].g_id;
+                console.log("This Game ID is: " + j_g_id);
+            }
+        });
+        setTimeout($scope.getJoinGames, 2000);
+    }
+
     $scope.getPreviousGames = function() {
         $http.get("/the-voting-game/gamecreator?action=getpreviousgames")
             .then(function(resp) {

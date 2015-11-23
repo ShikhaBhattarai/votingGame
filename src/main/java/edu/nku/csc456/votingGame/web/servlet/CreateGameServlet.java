@@ -124,6 +124,28 @@ public class CreateGameServlet extends HttpServlet {
 			resp.setContentType("application/json");
 			resp.getWriter().write(json);
 			resp.flushBuffer();
+		} else if (action.equals("getstartgames")) {
+			System.out.println("getStartGames servlet was called");
+			String p_u_name = req.getParameter("p_u_name");
+			// calls GameRepository getStartGames method
+			List<Game> startgames = grepo.getStartGames(p_u_name);
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			String json = gson.toJson(startgames);
+
+			resp.setContentType("application/json");
+			resp.getWriter().write(json);
+			resp.flushBuffer();
+		} else if (action.equals("getjoingames")) {
+			System.out.println("getJoinGames servlet was called");
+			String p_u_name = req.getParameter("p_u_name");
+			// calls GameRepository getJoinGames method
+			List<Game> joingames = grepo.getJoinGames(p_u_name);
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			String json = gson.toJson(joingames);
+
+			resp.setContentType("application/json");
+			resp.getWriter().write(json);
+			resp.flushBuffer();
 		} else if (action.equals("getpreviousgames")) {
 			System.out.println("getPreviousGames servlet was called");
 			// calls GameRepository getPreviousGames method

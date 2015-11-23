@@ -24,6 +24,8 @@ public class GameRepository {
     //private static final String CREATE_GAME_SQL = "INSERT INTO games (g_id, g_creator, p_joined) VALUES (?, ?, 1)";
     private static final String UPDATE_P_JOINED_SQL = "UPDATE games g, (SELECT COUNT(g_id) cnt FROM games WHERE g_id = ?) c SET g.p_joined = c.cnt WHERE g_id = ?;";
     private static final String SELECT_CURRENT_SQL = "SELECT * FROM games WHERE g_creator = p_u_name AND g_winner='none';";
+    private static final String SELECT_STARTGAMES_SQL = "SELECT * FROM games WHERE p_u_name = ? AND g_creator = p_u_name AND p_joined >= 2 AND g_winner='none';";
+    private static final String SELECT_JOINGAMES_SQL = "SELECT * FROM games WHERE p_u_name = ? AND g_creator != p_u_name AND g_winner='none';";
     private static final String SELECT_PREVIOUS_SQL = "SELECT * FROM games WHERE g_creator = p_u_name AND g_winner!='none';";
     private static final String INSERT_INTO_GAMES_SQL = "INSERT INTO games (g_id, g_creator, p_u_name) VALUES (?, ?, ?)";
 
@@ -77,6 +79,42 @@ public class GameRepository {
                 System.out.println("This Game is: " + g);
             }
             return currentgames;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Collections.emptyList();
+    }
+
+    public List<Game> getStartGames(String p_u_name) {
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_STARTGAMES_SQL)) {
+            statement.setString(1, p_u_name);
+            statement.execute();
+            ResultSet resultSet = statement.executeQuery();
+            List<Game> startgames = new ArrayList<>();
+            while (resultSet.next()) {
+                Game g = new Game(resultSet.getInt("g_id"), resultSet.getString("g_creator"), resultSet.getString("p_u_name"), resultSet.getBoolean("is_started"), resultSet.getInt("p_joined"), resultSet.getInt("p_score"), resultSet.getInt("g_round"), resultSet.getString("g_winner"));
+                startgames.add(g);
+                System.out.println("This Game is: " + g);
+            }
+            return startgames;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Collections.emptyList();
+    }
+
+    public List<Game> getJoinGames(String p_u_name) {
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_JOINGAMES_SQL)) {
+            statement.setString(1, p_u_name);
+            statement.execute();
+            ResultSet resultSet = statement.executeQuery();
+            List<Game> joingames = new ArrayList<>();
+            while (resultSet.next()) {
+                Game g = new Game(resultSet.getInt("g_id"), resultSet.getString("g_creator"), resultSet.getString("p_u_name"), resultSet.getBoolean("is_started"), resultSet.getInt("p_joined"), resultSet.getInt("p_score"), resultSet.getInt("g_round"), resultSet.getString("g_winner"));
+                joingames.add(g);
+                System.out.println("This Game is: " + g);
+            }
+            return joingames;
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -60,8 +60,8 @@
 					<div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
 						<a href="home.html" class="mdl-layout__tab">Overview</a>
 						<a href="invite.html" class="mdl-layout__tab is active" ng-click="createGame();">Create</a>
-						<a href="#join" class="mdl-layout__tab">Join</a>
-						<a href="#start" class="mdl-layout__tab">Start</a>
+						<a href="#join" class="mdl-layout__tab" ng-click="join()">Join</a>
+						<a href="#start" class="mdl-layout__tab" ng-click="join()">Start</a>
 						<a href="http://localhost:8080/the-voting-game/home.html#leaderboard" class="mdl-layout__tab">Leaderboard</a>
 						<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="bulkupload" ng-click="bulkUpload();" value="Bulk Card Upload">
 							<i id="bcu" class="material-icons" role="upload">add</i>
@@ -105,10 +105,10 @@
 									<h3 class="ng-binding">Create a Game</h3>
 									<p>Click on at least four players in the Players list to the left.</p>
 									<p>
-										They will be invited to join you in playing The Voting Game with game id: {{g_id}}.
+										They will be invited to join you in playing The Voting Game.
 									</p>
 
-									<p>{{f_name}}, you will be notified when there are enough players to start your game.</p>
+									<p><b>{{f_name}}</b>, you will be notified when there are enough players to start your game.</p>
 								</div>
 							</div>
 						</section>

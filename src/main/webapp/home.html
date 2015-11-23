@@ -59,7 +59,7 @@
 					<a href="home.html" class="mdl-layout__tab is-active">Overview</a>
 					<a href="invite.html" class="mdl-layout__tab" ng-click="createGameid();">Create</a>
 					<a href="#join" class="mdl-layout__tab" ng-click="join();">Join</a>
-					<a href="#start" class="mdl-layout__tab">Start</a>
+					<a href="#start" class="mdl-layout__tab" ng-click="join()">Start</a>
 					<a href="#leaderboard" class="mdl-layout__tab">Leaderboard</a>
 					<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="bulkupload" ng-click="bulkUpload();" value="Bulk Card Upload">
 						<i id="bcu" class="material-icons" role="upload">add</i>
@@ -78,7 +78,7 @@
 				<!-- Overview Section -->
 				<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
 					<header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white">
-						<img src="the_voting_game-5.jpg" alt="logo" height="380" width="250">
+						<img src="the_voting_game-5.jpg" alt="logo" height="381" width="250">
 					</header>
 					<div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
 						<div class="mdl-card__supporting-text">
@@ -126,7 +126,7 @@
 						<!-- still need to code start() functions -->
 						<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-hide="showStart" ng-click="createGameid();" ng-disabled="createSection.game_id.$invalid">Create Game</button>
 						<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-hide="showStart" ng-click="join();">Join Game</button>
-						<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="start();" ng-show="showStart" ng-disabled="createSection.game_id.$invalid">Start Game</button>
+						<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="join();" ng-disabled="createSection.game_id.$invalid">Start Game</button>
 					</div>
 				</section>
 

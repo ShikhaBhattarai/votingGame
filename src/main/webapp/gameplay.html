@@ -59,8 +59,8 @@
 				<div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
 					<a href="home.html" class="mdl-layout__tab">Overview</a>
 					<a href="invite.html" class="mdl-layout__tab is active" ng-click="createGame();">Create</a>
-					<a href="#join" class="mdl-layout__tab">Join</a>
-					<a href="#start" class="mdl-layout__tab">Start</a>
+					<a href="#join" class="mdl-layout__tab" ng-click="join()">Join</a>
+					<a href="#start" class="mdl-layout__tab" ng-click="join()">Start</a>
 					<a href="http://localhost:8080/the-voting-game/home.html#leaderboard" class="mdl-layout__tab">Leaderboard</a>
 					<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="bulkupload" ng-click="bulkUpload();" value="Bulk Card Upload">
 						<i id="bcu" class="material-icons" role="upload">add</i>
@@ -76,7 +76,41 @@
 
 		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
 			<div class="mdl-layout__drawer mdl-color--indigo mdl-color-text--grey-700">
-				<span class="mdl-layout-title mdl-color-text--black">Current Games</span>
+				<span class="mdl-layout-title mdl-color-text--black">Ready to Play</span>
+				<div ng-init="getStartGames();">
+					<div ng-show="startgames.length == 0" style="padding:20px">
+						You have no games ready <i class="material-icons">mood_bad</i>
+					</div>
+					<div ng-show="startgames.length > 0">
+						<div ng-repeat="game in startgames" style="padding:0px 34px">
+
+							<!-- We need a status to display next to the game ID, when it displays join and is clicked, it should -->
+							<!-- add 1 to p_joined and change to start once p_joined = 5 -->
+
+							<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" ng-click="startGame(game.g_id, game.g_creator);"/>
+							Game {{game.g_id}}
+							</button>
+						</div>
+					</div>
+				</div>
+				<span class="mdl-layout-title mdl-color-text--black">Your Game Invites</span>
+				<div ng-init="getJoinGames();">
+					<div ng-show="joingames.length == 0" style="padding:20px">
+						You have no invitaitons <i class="material-icons">mood_bad</i>
+					</div>
+					<div ng-show="joingames.length > 0">
+						<div ng-repeat="game in joingames" style="padding:0px 34px">
+
+							<!-- We need a status to display next to the game ID, when it displays join and is clicked, it should -->
+							<!-- add 1 to p_joined and change to start once p_joined = 5 -->
+
+							<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" ng-click="joinGame(game.g_id, game.g_creator);"/>
+							Game {{game.g_id}}
+							</button>
+						</div>
+					</div>
+				</div>
+				<span class="mdl-layout-title mdl-color-text--black">All Current Games</span>
 				<div ng-init="getCurrentGames();">
 					<div ng-show="currentgames.length == 0" style="padding:20px">
 						There are no current games <i class="material-icons">mood_bad</i>
