@@ -1,25 +1,25 @@
-// Card.java
+// Question.java
 // for Chatty Cathy
 
 package edu.nku.csc456.votingGame.web.model;
 
 import java.time.LocalDateTime;
 
-public class Card {
-    String quesiton;
+public class Question {
+    String question;
     String creator;
 
-    public Card() {
-        this.quesiton = "";
+    public Question() {
+        this.question = "";
         this.creator = "";
     }
 
-    public Card (String quesiton, String creator) {
-        this.quesiton = quesiton;
+    public Question (String question, String creator) {
+        this.question = question;
         this.creator = creator;
     }
 
-    /*public Card (String sender, String recipient, String message, LocalDateTime message_date) {
+    /*public Question (String sender, String recipient, String message, LocalDateTime message_date) {
         this.sender = sender;
         this.recipient = recipient;
         this.message = message;
@@ -30,8 +30,8 @@ public class Card {
         return card_no;
     }*/
 
-    public String getQuesiton() {
-        return quesiton;
+    public String getQuestion() {
+        return question;
     }
 
     public String getCreator() {
@@ -46,8 +46,8 @@ public class Card {
         this.card_no = card_no;
     }*/
 
-    public void setQuesiton(String quesiton) {
-        this.quesiton = quesiton;
+    public void setQuestion(String question) {
+        this.question = question;
     }
 
     public void setCreator(String creator) {

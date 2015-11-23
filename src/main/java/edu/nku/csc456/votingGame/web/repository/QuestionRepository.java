@@ -1,27 +1,27 @@
-// MessageRepository.java
-// for Chatty Cathy
+// QuestionRepository.java
+// for The Voting Game
 
 package edu.nku.csc456.votingGame.web.repository;
 
-import edu.nku.csc456.votingGame.web.model.Card;
+import edu.nku.csc456.votingGame.web.model.Question;
 import java.sql.*;
 import java.util.*;
 
-public class CardRepository {
+public class QuestionRepository {
 
 	private Connection connection;
-	private static final String INSERT_SQL = "INSERT INTO cards (question, creator) VALUES (?, ?)";
+	private static final String INSERT_SQL = "INSERT INTO questions (question, creator) VALUES (?, ?)";
 	//private static final String SELECT_MESSAGE_SQL = "SELECT * FROM messages WHERE (sender = ? AND recipient = ?) OR (sender = ? AND recipient = ?) ORDER BY message_date";
 
-	public CardRepository(Connection connection) {
+	public QuestionRepository(Connection connection) {
 		this.connection = connection;
 	}
 
-	public void saveCard(String question, String creator) {
+	public void addQuestion(String question, String creator) {
 		try (PreparedStatement statement = connection.prepareStatement(INSERT_SQL)) {
-			Card c = new Card(question, creator);
-			statement.setString(1, c.getQuesiton());
-			statement.setString(2, c.getCreator());
+			Question q = new Question(question, creator);
+			statement.setString(1, "question");
+			statement.setString(2, "creator");
 			statement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();

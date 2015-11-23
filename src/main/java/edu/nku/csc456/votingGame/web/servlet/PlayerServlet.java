@@ -1,11 +1,10 @@
 // PlayerServlet.java
-// for Chatty Cathy
+// for The Voting Game
 
 package edu.nku.csc456.votingGame.web.servlet;
 
 import edu.nku.csc456.votingGame.web.listener.MysqlContextListener;
 import edu.nku.csc456.votingGame.web.model.Player;
-//import edu.nku.csc456.votingGame.web.repository.CardRepository;
 import edu.nku.csc456.votingGame.web.repository.PlayerRepository;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

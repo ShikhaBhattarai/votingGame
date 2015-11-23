@@ -60,6 +60,28 @@ gameApp.controller('GameController', function($scope, $http) {
             });
     }
 
+    $scope.addQuestion = function() {
+        $http.post("/the-voting-game/questions", {}, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params: {
+                "action": "addquestion",
+                "question": $scope.question,
+                "creator": $scope.u_name
+            }
+        })
+        .then(function(resp) {
+            var json = resp.data;
+            console.log(json.result);
+            if (json.result == "questioncreated") {
+                $scope.question = json.question;
+                $scope.creator = $scope.u_name;
+            }
+        });
+        window.location = "/the-voting-game/home.html";
+    }
+
     $scope.createGameid = function() {
         $http.post("/the-voting-game/gamecreator", {}, {
             headers: {
@@ -232,7 +254,7 @@ gameApp.controller('GameController', function($scope, $http) {
     }
 
     $scope.join = function() {
-        window.location = "/the-voting-game/gameplay.html";
+        window.location = "/the-voting-game/pregameplay.html";
     }
 
     $scope.joinGame = function(g_id, g_creator, p_u_name) {

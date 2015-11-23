@@ -26,7 +26,7 @@ public class GameEndpoint {
 	@OnClose
 	public void onClose(Session session) {
 		System.out.println("Game session closed (id: " + session.getId() + ")");
-		PlayerRepository urepo = new PlayerRepository(MysqlContextListener.connection);
+		PlayerRepository prepo = new PlayerRepository(MysqlContextListener.connection);
 		LocalDateTime ldt = LocalDateTime.now();
 		System.out.println("Game session closed (id: " + session.getId() + ")");
 		System.out.println("De-registering player: " + SessionHandler.getInstance().getPlayer(session) + " for session " + session.getId());
