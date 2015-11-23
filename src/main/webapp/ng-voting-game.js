@@ -67,7 +67,8 @@ gameApp.controller('GameController', function($scope, $http) {
             },
             params: {
                 "action": "creategameid",
-                "g_creator": $scope.u_name
+                "g_creator": $scope.u_name,
+                "p_u_name": $scope.u_name
             }
         })
         .then(function(resp) {
@@ -76,9 +77,34 @@ gameApp.controller('GameController', function($scope, $http) {
             if (json.result == "idcreated") {
                 $scope.g_id = json.g_id;
                 $scope.g_creator = $scope.u_name;
+                $scope.p_u_name = $scope.u_name;
             }
         });
         window.location = "/the-voting-game/invite.html";
+    }
+
+    $scope.createGamePlay = function(g_id, g_creator) {
+        $http.post("/the-voting-game/gamecreator", {}, {
+            headers: {
+                'ContentType': 'application/x-www-form-urlencoded'
+            },
+            params: {
+                "action":  "creategameplay",
+                "g_id": $scope.g_id,
+                "g_creator": $scope.g_creator,
+                "p_u_name": $scope.u_name
+            }
+        })
+        .then(function(resp) {
+            var json = resp.data;
+            console.log(json.result);
+            if (json.result == "addedtogameplay") {
+                $scope.g_id = $scope.g_id;
+                $scope.g_creator = $scope.g_creator;
+                $scope.p_u_name = $scope.u_name;
+                console.log("game " + $scope.g_id + " was added to gameplay");
+            }
+        });
     }
 
     $scope.selectPlayer = function(selectedE_mail) {
@@ -89,7 +115,6 @@ gameApp.controller('GameController', function($scope, $http) {
             },
             params: {
                 "action": "getgameid",
-                "g_creator": $scope.u_name
             }
         })
         .then(function(resp) {
@@ -98,8 +123,12 @@ gameApp.controller('GameController', function($scope, $http) {
             if (json.result == "idretrieved") {
                 $scope.g_id = json.g_id;
                 $scope.g_creator = $scope.u_name;
+                $scope.p_u_name = $scope.u_name;
                 $scope.is_started = json.is_started;
                 $scope.p_joined = json.p_joined;
+                $scope.p_score = json.p_score;
+                $scope.g_round = json.g_round;
+                $scope.g_winner = json.g_winner;
                 console.log("the retrieved id is: " + $scope.g_id);
                 console.log("the retrieved creator is: " + $scope.g_creator);
                 console.log("the retrieved status is: " + $scope.is_started);
@@ -112,6 +141,9 @@ gameApp.controller('GameController', function($scope, $http) {
                             console.log("Game id is invalid");
                         }
             }
+            // creategameplay
+            //console.log("adding game to gameplay");
+            //$scope.createGamePlay();
         });
     }
 
@@ -163,7 +195,7 @@ gameApp.controller('GameController', function($scope, $http) {
         window.location = "/the-voting-game/gameplay.html";
     }
 
-    $scope.joinGame = function(g_id) {
+    $scope.joinGame = function(g_id, g_creator, p_u_name) {
         console.log("The player should join Game ID: " + g_id);
         $http.post("/the-voting-game/gamecreator", {}, {
             headers: {
@@ -171,16 +203,22 @@ gameApp.controller('GameController', function($scope, $http) {
             },
             params: {
                 "action": "joingame",
-                "g_id": g_id
+                "g_id": g_id,
+                "g_creator": g_creator,
+                "p_u_name": $scope.u_name
             }
         })
         .then(function(resp) {
-            if ($scope.p_joined >= 5) {
+            // final voting game should have at least 5 players; setting to 2 for development
+            if ($scope.p_joined >= 2) {
                 console.log($scope.p_joined + " players have joined. Game play can begin!");
                 // display start button
             } else {
-                // is there an else?
+                // game status is still pending
             }
+            // creategameplay
+            //console.log("adding game to gameplay");
+            //$scope.createGamePlay(g_id, g_creator);
         })
     }
 

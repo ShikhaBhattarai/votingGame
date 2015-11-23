@@ -17,10 +17,7 @@ public class PlayerRepository {
 	private static final String SELECT_ALL_SQL = "SELECT * FROM players;";
 	private static final String SELECT_PLAYER_SQL = "SELECT * FROM players WHERE u_name = ";
 	private static final String LEADER_SQL = "SELECT f_name, u_name, g_won, g_lost FROM players ORDER BY g_won DESC;";
-	private static final String SELECT_JOINED_PLAYERS_SQL = "SELECT * FROM joined";
-	//private static final String UPDATE_USER_LASTCHATTIME_SQL = "UPDATE users SET lastchattime= ? WHERE username = ?";
-	//private static final String UPDATE_USER_LASTCHATWITH_SQL = "UPDATE users SET lastchatwith= ? WHERE username = ?";
-	//private static final String UPDATE_USER_ISONLINE_SQL = "UPDATE users SET isonline= ? WHERE username = ?";
+	//private static final String SELECT_JOINED_PLAYERS_SQL = "SELECT * FROM joined";
 
 	public PlayerRepository(Connection connection) {
 		this.connection = connection;

@@ -26,13 +26,21 @@ CREATE TABLE IF NOT EXISTS gameids (
 CREATE TABLE IF NOT EXISTS games (
     g_id INT NOT NULL,
     g_creator VARCHAR(20) NOT NULL,
-    p_joined INT,
-    CONSTRAINT gameID PRIMARY KEY (g_id, g_creator),
-    FOREIGN KEY (g_id) REFERENCES gameids(g_id)
-   );
+    p_u_name VARCHAR(20) NOT NULL,
+    is_started BOOLEAN NOT NULL DEFAULT 0,
+    p_joined INT NOT NULL DEFAULT 0,
+    p_score INT NOT NULL DEFAULT 0,
+    g_round INT NOT NULL DEFAULT 0,
+    g_winner VARCHAR(20) NOT NULL DEFAULT "none",
+    PRIMARY KEY (g_id, g_creator, p_u_name)
+);
 
-CREATE TABLE IF NOT EXISTS per_game_stats (
-	g_id INT NOT NULL AUTO_INCREMENT,
-	u_name VARCHAR(20) NOT NULL,
-	g_score INT DEFAULT 0
+CREATE TABLE IF NOT EXISTS gameplay (
+    g_id INT NOT NULL,
+    g_creator VARCHAR(20) NOT NULL,
+    p_u_name VARCHAR(20) NOT NULL,
+    p_score INT NOT NULL DEFAULT 0,
+    g_round INT NOT NULL DEFAULT 0,
+    g_winner VARCHAR(20) NOT NULL DEFAULT "none",
+    PRIMARY KEY (g_id, g_creator, p_u_name)
 );

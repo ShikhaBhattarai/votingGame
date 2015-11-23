@@ -40,7 +40,7 @@ public class SendEmailInviteServlet extends HttpServlet {
         final String emailAddress = "URStem2015@gmail.com";
         final String passWord = "UR$t3mNKU";
         String inviteSubject = "You have been invited to play The Voting Game!";
-        String inviteBody = "Hello there!" + "\n\nYou have been invited to play The Voting Game by " + g_creator + "." + "\n\nIf you would like to play, just <a href=\"http://localhost:8080/the-voting-game\">Login</a> and join game ID: " + g_id + ".\n\nThanks!\nThe Voting Game Team";
+        String inviteBody = "Hello there!" + "\n\nYou have been invited to play The Voting Game by " + g_creator + "." + "\n\nIf you would like to play, just <a href=\"http://localhost:8080/the-voting-game/login.html\">Login</a> and join game ID: " + g_id + ".\n\nThanks!\nThe Voting Game Team";
 
         Properties properties = new Properties();
         properties.put("mail.smtp.host", "smtp.gmail.com");
