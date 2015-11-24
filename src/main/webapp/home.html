@@ -104,22 +104,9 @@
 							</div>
 							<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
 								<h5>Add a Question</h5>
-								Example question:  Who would be the best Wal-Mart greeter?.
+								Add a custom question to your games. &nbspExample question:  Who would be the best Wal-Mart greeter?.
 							</div>
-							<div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone" ng-show="showQuestion" ng-form name="questionSection">
-								<div class="section__circle-container__circle mdl-color--primary"></div>
-							</div>
-							<div class="mdl-textfield mdl-js-textfield" ng-show="showQuestion" ng-form name="questionSection" autofocus>
-								<input class="mdl-textfield__input" type="text" name="question" ng-model="question" ng-required="showQuestion" id="question"/>
-								<label class="mdl-textfield__label" for="question">Submit Question</label><br/>
-								<div>
-									<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="showQuestion=false" ng-required="showQuestion">Cancel</button>
-								</div>
-							</div>
-							<!--<div class="mdl-textfield mdl-js-textfield" ng-show="showQuestion" ng-form name="u_nameSection" autofocus>
-								<input class="mdl-textfield__input" type="text" name="creator" ng-model="creator" ng-required="showQuestion" id="creator"/>
-								<label class="mdl-textfield__label" for="creator">Username</label>
-							</div>-->
+
 							<div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
 								<div class="section__circle-container__circle mdl-color--primary"></div>
 							</div>
@@ -146,11 +133,16 @@
 					<div class="mdl-card__actions">
 						<!-- still need to code start() functions -->
 						<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="showQuestion=true" ng-hide="showQuestion">Add Question</button>
-						<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="addQuestion();" ng-show="showQuestion" ng-disabled="u_nameSection.u_name.$invalid || questionSection.question.$invalid">Add Question</button>
-						<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-hide="showQuestion" ng-click="" ng-disabled="questionSection.game_id.$invalid">Add Question 2</button>
-						<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="createGameid();" ng-disabled="createSection.game_id.$invalid">Create Game</button>
-						<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="join();">Join Game</button>
-						<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="join();" ng-disabled="createSection.game_id.$invalid">Start Game</button>
+						<!--<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-hide="showQuestion" ng-click="" ng-disabled="questionSection.game_id.$invalid">Add Question 2</button>-->
+						<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="createGameid();" ng-disabled="createSection.game_id.$invalid" ng-hide="showQuestion">Create Game</button>
+						<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="join();" ng-hide="showQuestion">Join Game</button>
+						<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="join();" ng-disabled="createSection.game_id.$invalid" ng-hide="showQuestion">Start Game</button>
+						<div class="mdl-textfield mdl-js-textfield" ng-show="showQuestion" ng-form name="questionSection" autofocus>
+							<input class="mdl-textfield__input" type="text" name="question" ng-model="question" ng-required="showQuestion" id="question"/>
+							<label class="mdl-textfield__label" for="question">Enter Question</label><br/>
+						</div>
+						<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="addQuestion();" ng-show="showQuestion" ng-disabled="u_nameSection.u_name.$invalid || questionSection.question.$invalid">Submit Question</button>
+						<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="showQuestion=false" ng-required="showQuestion">Cancel</button>
 					</div>
 				</section>
 

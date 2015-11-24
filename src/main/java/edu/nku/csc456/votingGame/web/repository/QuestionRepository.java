@@ -19,29 +19,25 @@ public class QuestionRepository {
 
 	public void addQuestion(String question, String creator) {
 		try (PreparedStatement statement = connection.prepareStatement(INSERT_SQL)) {
-			Question q = new Question(question, creator);
-			statement.setString(1, "question");
-			statement.setString(2, "creator");
+			statement.setString(1, question);
+			statement.setString(2, creator);
 			statement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	/*public List<Card> findCards(String u1, String u2) {
-		try(PreparedStatement statement = connection.prepareStatement(SELECT_MESSAGE_SQL)) {
-			statement.setString(1, u1);
-			statement.setString(2, u2);
-			statement.setString(3, u2);
-			statement.setString(4, u1);
+	/*public List<Question> findQuestions(String question) {
+		try(PreparedStatement statement = connection.prepareStatement(SELECT_QUESTION_SQL)) {
+			statement.setString(1, question);
 			statement.execute();
 			ResultSet resultSet = statement.getResultSet();
-			List<Message> messagesList = new ArrayList<>();
+			List<Question> questionsList = new ArrayList<>();
 			while (resultSet.next() ) {
-				Message m = new Message(resultSet.getString("sender"), resultSet.getString("recipient"), resultSet.getString("message"), (resultSet.getTimestamp("message_date")).toLocalDateTime());
-				messagesList.add(m);
+				Question q = new Question(resultSet.getString("question"));
+				questionsList.add(q);
 			}
-			return messagesList;
+			return questionsList;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
